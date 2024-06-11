@@ -92,9 +92,44 @@ public class ControlFlow {
 		// LOOPS
 		
 		// for
+		// to loop code a specific number of times
+		// takes in a variable, a condition, and an action to execute after each loop
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Index = " + i);
+		}
+		
+		String[] strings = { "a", "b", "c", "d", "e" };
+		
+		for (int i = 0; i < strings.length; i++) {
+			System.out.println("Value at Index " + i + " = " + strings[i]);
+		}
 		
 		
 		// enhanced for
+		// iterates through elements in a collection of some sort to do something with each
+		// advantages = easier syntax, more readable
+		// disadvantages = no direct access to the index, an extra variable
+		
+		int[] nums = { 2, 4, 6, 8, 10 };
+		
+		for (int num : nums) {
+			num+=3;
+		}
+		
+		// we haven't changed the original value, because num is just a local variable inside the loop body
+		System.out.println(nums[0]);
+		
+		int counterX = 0;
+		
+		for (int num : nums) {
+			
+			// to change the original array, we need access to the index
+			nums[counterX] = num * 2;
+			counterX++;
+		}
+		
+		// now we've changed the actual value in the original array
+		System.out.println(nums[0]);
 		
 		
 		// while
@@ -124,11 +159,42 @@ public class ControlFlow {
 		} while (otherCounter < 5);
 		
 		
+		// The Ternary Operator
+		// a shorthand way of asking a boolean question
+		// and taking an action or returning a result
 		
+		/**
+		 * if (condition) {} else {}
+		 * condition ? something : somethingelse
+		 */
+		boolean isIt = true;
 		
+		String myName = (isIt) ? "Jon" : "Marla";
 		
+		/**
+		 * if (isIt) {
+		 * 		return "Jon";
+		 * } else {
+		 * 		return "Marla";
+		 * }
+		 */
 		
-
+		System.out.println(myName);
+		
+		int questionNum = ("a" == "b") ? (4 < 6) ? 8 : 9 : 10;
+		
+		System.out.println(questionNum);
+		
+		// exporting this same question to a method to reuse the functionality
+		System.out.println(ternary("a", "b"));
 	}
+	
+	public static int ternary(String a, String b) {
+		return (a == b) ? (4 < 6) ? 8 : 9 : 10;
+	}
+	
+	
+	
+	
 
 }
