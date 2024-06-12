@@ -16,7 +16,6 @@ public class FactoryDesignPattern {
 		
 		Shape s = sf.makeShape(5);
 		System.out.println("I am a " + s.getClass() + " and I have " + s.numberOfSides + " sides.");
-
 	}
 
 }
