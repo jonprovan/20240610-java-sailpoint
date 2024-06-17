@@ -132,6 +132,70 @@ DELETE FROM certification WHERE certification_id = 700;
 SELECT employee.employee_id, employee_firstname, employee_lastname, department_id, certification.certification_id, certification_name FROM employee
 	JOIN employee_certification ON employee.employee_id = employee_certification.employee_id
     JOIN certification ON employee_certification.certification_id = certification.certification_id;
+    
+INSERT INTO employee_certification(employee_id, certification_id) 
+	VALUES ( 4 , 650 ), ( 4 , 652 ), ( 4 , 646 ), ( 5 , 651 ), ( 5 , 653 ), ( 6 , 648 ), ( 7 , 647 ), ( 7 , 651 );
+    
+# Entity Relationship Diagram (ERD) -- a visual depiction of your database structure
+-- tables, their rows, foreign keys, relationship types, etc.
+-- Database > Reverse Engineer, then click through
+
+# max value is 999.99
+-- in DECIMAL(a, b), a = max number of total digits, including the decimal, and b = number of decimal places
+-- ALTER TABLE changes the structure of the actual database table, NOT the data within it
+-- constraints like NOT NULL or foreign keys may make an operation like this impossible
+ALTER TABLE `company`.`employee` 
+ADD COLUMN `employee_age` DECIMAL(5,2) NULL AFTER `department_id`;
+
+SELECT * FROM employee;
+
+UPDATE employee SET employee_age = 50.5 WHERE employee_id = 1;
+UPDATE employee SET employee_age = 12.55 WHERE employee_id = 2;
+UPDATE employee SET employee_age = 150.6 WHERE employee_id = 3;
+UPDATE employee SET employee_age = 99 WHERE employee_id = 4;
+UPDATE employee SET employee_age = 89.11 WHERE employee_id = 5;
+UPDATE employee SET employee_age = 18.00 WHERE employee_id = 6;
+UPDATE employee SET employee_age = 44.66 WHERE employee_id = 7;
+
+UPDATE employee SET department_id = 5 WHERE employee_id = 6;
+UPDATE employee SET department_id = 5 WHERE employee_id = 7;
+
+# Aggregates in SQL
+-- taking several values and returning a single value
+-- counting the number of something, averaging something, etc.
+
+# how many employees do I have with an id > 3?
+SELECT COUNT(employee_id) FROM employee WHERE employee_id > 3;
+
+# getting the average age for all employees over 65
+SELECT AVG(employee_age) FROM employee WHERE employee_age >= 65;
+
+# getting the sum of all the ages of employees under 65
+SELECT SUM(employee_age) FROM employee WHERE employee_age < 65;
+
+SELECT MIN(employee_age) FROM employee;
+SELECT MAX(employee_age) FROM employee;
+
+# GROUP BY
+-- separates the results into groups, then executes the aggregates
+SELECT department_name, COUNT(employee_id) 
+	FROM employee JOIN department ON employee.department_id = department.department_id 
+    GROUP BY employee.department_id;
+    
+# average number of certifications each employee has
+-- employee, employee_certification
+
+SELECT employee_firstname, COUNT(*)
+	FROM employee_certification JOIN employee ON employee.employee_id = employee_certification.employee_id
+    GROUP BY employee_certification.employee_id;
+    
+# using a generated value as a field in our table
+ALTER TABLE `company`.`employee` 
+ADD COLUMN `employee_name` VARCHAR(61) GENERATED ALWAYS AS (CONCAT(employee_firstname, " ", employee_lastname)) VIRTUAL AFTER `employee_age`;
+
+UPDATE employee SET employee_lastname = "Bigelow" WHERE employee_id = 1;
+
+
 
 
 
