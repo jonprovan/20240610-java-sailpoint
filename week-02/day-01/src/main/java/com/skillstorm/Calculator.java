@@ -26,8 +26,8 @@ public class Calculator {
 	}
 	
 	// potential problem = overflow
-	public int add(int num1, int num2) {
-		return num1 + num2;
+	public long add(int num1, int num2) {
+		return (long)num1 + (long)num2;
 	}
 	
 	public int subtract(int num1, int num2) {
@@ -43,6 +43,7 @@ public class Calculator {
 		return num1 / num2;
 	}
 	
+	// this method gets a random integer between the two params (inclusive of both)
 	public int getRandom(int num1, int num2) {
 		
 		// new Random() returns a random decimal between 0 and 1
