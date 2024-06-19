@@ -3,6 +3,11 @@ package com.skillstorm;
 // these imports are for things we'll need while testing
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -83,6 +88,9 @@ public class CalculatorTest {
 	public void additionOverflow() {
 		System.out.println("Addition Overflow Test");
 		
+		// have to cast here to avoid integer addition creating the wrong result
+		// Java assumes whole numbers are integers unless told otherwise
+		// direct casting or putting the L at the end lets Java know they're longs
 		long largeNum = 2000000000L + (long)2000000000;
 		
 		long sum = calc.add(2000000000, 2000000000);
@@ -108,16 +116,70 @@ public class CalculatorTest {
 		
 		assertTrue(
 				maxValue == calc.add(Integer.MAX_VALUE, Integer.MAX_VALUE)
-			&&  minValue == calc.add(Integer.MIN_VALUE, Integer.MIN_VALUE)
+			 && minValue == calc.add(Integer.MIN_VALUE, Integer.MIN_VALUE)
 				);
 	}
+	
+	// if we expect/want a certain type of exception to be thrown, we can say it's expected here
+	// we DO NOT need an assert statement
+	@Test(expected = IllegalArgumentException.class)
+	public void divideByZero() throws Exception {
+		System.out.println("Divide By Zero Test");
+		
+		calc.divide(5, 0);
+	}
+	
+	@Test
+	public void divideByInteger() throws Exception {
+		System.out.println("Divide By Integer Test");
+		double quotient = calc.divide(2, 3);
+		
+		// third param for double assertEquals is the margin of allowable error
+		assertEquals(.6666, quotient, .001);
+	}
+	
+	// you can cover code by calling methods that call other methods
+	// you don't necessarily need to call the sub-methods directly
+	// but you can if you like
+	@Test(expected = Exception.class)
+	public void numeratorAsOne() throws Exception {
+		calc.divide(1, 234);
+	}
+	
+	// testing our random number generator to see if it gives us the proper options
+	// can't just run it once, because it may generate a valid result
+	// even though it's POSSIBLE that it might not
+	@Test
+	public void randomValues() {
+		Set<Integer> set = new HashSet<>();
+		set.addAll(Arrays.asList(5, 6, 7, 8, 9, 10));
+		
+		boolean containsAnswer = true;
+		int response = 0;
+		
+		for(int i = 0; i < 10000; i++) {
+			response = calc.getRandom(5, 10);
+			
+			containsAnswer = set.contains(response);
+			if(!containsAnswer) {
+				System.out.println("One of the responses (" + response + ") was outside the boundaries!");
+				break;
+			}
+				
+		}
+		
+		assertTrue("One of the responses (" + response + ") was outside the boundaries!", containsAnswer);
+		
+	}
+	
+	
 	
 	@After
 	public void afterEach() {
 		System.out.println("Running - After");
 	}
 	
-	// destroys my static instance to save memory if I'm running a bajillion tests
+	// destroys my static instance to save memory if I'm running a bajillion tests in different classes
 	@AfterClass
 	public static void teardown() {
 		System.out.println("Running - AfterClass");
