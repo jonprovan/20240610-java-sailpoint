@@ -36,6 +36,34 @@ public class DepartmentController {
 		return repo.findAll();
 	}
 	
+	@GetMapping("/{id}")											// can specify an additional suffix per method, curly braces indicate a path variable
+	public Department getDepartmentById(@PathVariable int id) {		// have to specify that the id variable comes from the path
+		return repo.findById(id).get();								// this will throw an Exception if there's no Department with this id
+	}
+	
+	@PostMapping
+	public Department addDepartment(@RequestBody Department department) {
+		if (repo.existsById(department.getDepartmentId()))
+			return null;
+		else
+			return repo.save(department);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteDepartmentById(@PathVariable int id) {
+		repo.deleteById(id);
+	}
+	
+	@PutMapping
+	public Department updateDepartment(@RequestParam int id, @RequestParam String name) {
+//		Department temp = repo.findById(id).get();
+//		temp.setDepartmentName(name);
+//		return repo.save(temp);
+		if (!repo.existsById(id))
+			return null;
+		else
+			return repo.save(new Department(id, name));
+	}
 	
 	
 	
