@@ -1,12 +1,19 @@
 package com.skillstorm.models;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // MODEL-VIEW-CONTROLLER (MVC)
@@ -31,16 +38,21 @@ public class Department {
 	@Column(name = "department_name")
 	private String departmentName;
 	
+	@OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("department")
+	private List<Employee> employees;
+	
 	// we do need a no-args constructor, or Spring will throw errors later
 	public Department() {
 		super();
 	}
 
 	// can generate from here on down with Source, if you like
-	public Department(int departmentId, String departmentName) {
+	public Department(int departmentId, String departmentName, List<Employee> employees) {
 		super();
 		this.departmentId = departmentId;
 		this.departmentName = departmentName;
+		this.employees = employees;
 	}
 
 	public int getDepartmentId() {
@@ -59,26 +71,12 @@ public class Department {
 		this.departmentName = departmentName;
 	}
 
-	@Override
-	public String toString() {
-		return "Department [departmentId=" + departmentId + ", departmentName=" + departmentName + "]";
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(departmentId, departmentName);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Department other = (Department) obj;
-		return departmentId == other.departmentId && Objects.equals(departmentName, other.departmentName);
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 	
 }

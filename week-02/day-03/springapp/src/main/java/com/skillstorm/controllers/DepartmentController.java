@@ -1,5 +1,7 @@
 package com.skillstorm.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.models.Department;
+import com.skillstorm.models.Employee;
 import com.skillstorm.repositories.DepartmentRepository;
 import com.skillstorm.services.DepartmentService;
 
@@ -53,8 +56,8 @@ public class DepartmentController {
 	}
 	
 	@PutMapping
-	public Department updateDepartment(@RequestParam int id, @RequestParam String name) {
-		return service.updateDepartment(id, name);
+	public Department updateDepartment(@RequestParam int id, @RequestParam String name, @RequestBody List<Employee> employees) {
+		return service.updateDepartment(id, name, employees);
 	}
 	
 	// an endpoint for getting our Department count

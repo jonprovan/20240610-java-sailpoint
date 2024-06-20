@@ -1,5 +1,7 @@
 package com.skillstorm.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -9,6 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -27,16 +32,21 @@ public class Employee {
 	@Column(name = "employee_lastname")
 	private String employeeLastname;
 	
-	@Column(name = "department_id")
-	private int departmentId;
+	@ManyToOne
+	@JoinColumn(name = "department_id", referencedColumnName = "department_id")
+	@JsonIgnoreProperties("employees")
+	private Department department;
+	
+//	@Column(name = "department_id")
+//	private int departmentId;
 	
 	@Column(name = "employee_age")
 	private double employeeAge;
 	
-	@Column(name = "employee_name")
-	private String employeeName;
+//	@Column(name = "employee_name")
+//	private String employeeName;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "employee_detail", referencedColumnName = "detail_id")
 	@JsonIgnoreProperties("employee")
 	private Detail detail;
@@ -45,20 +55,27 @@ public class Employee {
 //	@Column(name = "employee_detail")
 //	private int employeeDetail;
 	
+	@ManyToMany
+	@JoinTable(name = "employee_certification",									// what's the name of the join table
+			   joinColumns = @JoinColumn(name = "employee_id"),					// which column in this table links to the join table
+			   inverseJoinColumns = @JoinColumn(name = "certification_id"))		// which column in the other table links to the join table
+	@JsonIgnoreProperties("employees")
+	private List<Certification> certifications;
+	
 	public Employee() {
 		super();
 	}
 
-	public Employee(int employeeId, String employeeFirstname, String employeeLastname, int departmentId,
-			double employeeAge, String employeeName, Detail detail) {
+	public Employee(int employeeId, String employeeFirstname, String employeeLastname, Department department,
+			double employeeAge, Detail detail, List<Certification> certifications) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeFirstname = employeeFirstname;
 		this.employeeLastname = employeeLastname;
-		this.departmentId = departmentId;
+		this.department = department;
 		this.employeeAge = employeeAge;
-		this.employeeName = employeeName;
 		this.detail = detail;
+		this.certifications = certifications;
 	}
 
 	public int getEmployeeId() {
@@ -85,12 +102,12 @@ public class Employee {
 		this.employeeLastname = employeeLastname;
 	}
 
-	public int getDepartmentId() {
-		return departmentId;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	public double getEmployeeAge() {
@@ -101,19 +118,19 @@ public class Employee {
 		this.employeeAge = employeeAge;
 	}
 
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
-
 	public Detail getDetail() {
 		return detail;
 	}
 
 	public void setDetail(Detail detail) {
 		this.detail = detail;
+	}
+
+	public List<Certification> getCertifications() {
+		return certifications;
+	}
+
+	public void setCertifications(List<Certification> certifications) {
+		this.certifications = certifications;
 	}
 }

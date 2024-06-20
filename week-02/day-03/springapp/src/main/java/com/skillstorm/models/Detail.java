@@ -22,6 +22,7 @@ public class Detail {
 	@Column(name = "detail_text")
 	private String detailText;
 	
+	// this property DOES NOT EXIST in this table, but it's okay to have it in our object
 	@OneToOne(mappedBy = "detail")
 	@JsonIgnoreProperties("detail")
 	private Employee employee;

@@ -16,5 +16,12 @@ public class EmployeeService {
 	public Iterable<Employee> getAllEmployees() {
 		return repo.findAll();
 	}
+	
+	// create one
+	public Employee createEmployee(Employee employee) {
+		if(repo.existsById(employee.getEmployeeId()))
+			return null;
+		return repo.save(employee);
+	}
 
 }

@@ -1,9 +1,12 @@
 package com.skillstorm.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skillstorm.models.Department;
+import com.skillstorm.models.Employee;
 import com.skillstorm.repositories.DepartmentRepository;
 
 @Service							// designates this as an injectable service for request logic/handling
@@ -32,10 +35,10 @@ public class DepartmentService {
 	}
 	
 	// update one
-	public Department updateDepartment(int id, String name) {
+	public Department updateDepartment(int id, String name, List<Employee> employees) {
 		if (!repo.existsById(id))
 			return null;
-		return repo.save(new Department(id, name));
+		return repo.save(new Department(id, name, employees));
 	}
 	
 	// delete one
