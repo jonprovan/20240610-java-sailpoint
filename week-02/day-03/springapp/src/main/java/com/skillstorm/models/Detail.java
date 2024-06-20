@@ -1,10 +1,13 @@
 package com.skillstorm.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,14 +22,19 @@ public class Detail {
 	@Column(name = "detail_text")
 	private String detailText;
 	
+	@OneToOne(mappedBy = "detail")
+	@JsonIgnoreProperties("detail")
+	private Employee employee;
+	
 	public Detail() {
 		super();
 	}
 
-	public Detail(int detailId, String detailText) {
+	public Detail(int detailId, String detailText, Employee employee) {
 		super();
 		this.detailId = detailId;
 		this.detailText = detailText;
+		this.employee = employee;
 	}
 
 	public int getDetailId() {
@@ -44,7 +52,13 @@ public class Detail {
 	public void setDetailText(String detailText) {
 		this.detailText = detailText;
 	}
-	
-	
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 	
 }

@@ -1,10 +1,15 @@
 package com.skillstorm.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,15 +36,21 @@ public class Employee {
 	@Column(name = "employee_name")
 	private String employeeName;
 	
-	@Column(name = "employee_detail")
-	private int employeeDetail;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "employee_detail", referencedColumnName = "detail_id")
+	@JsonIgnoreProperties("employee")
+	private Detail detail;
+	
+	// if we don't want to see the detail info in our results
+//	@Column(name = "employee_detail")
+//	private int employeeDetail;
 	
 	public Employee() {
 		super();
 	}
 
 	public Employee(int employeeId, String employeeFirstname, String employeeLastname, int departmentId,
-			double employeeAge, String employeeName, int employeeDetail) {
+			double employeeAge, String employeeName, Detail detail) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeFirstname = employeeFirstname;
@@ -47,7 +58,7 @@ public class Employee {
 		this.departmentId = departmentId;
 		this.employeeAge = employeeAge;
 		this.employeeName = employeeName;
-		this.employeeDetail = employeeDetail;
+		this.detail = detail;
 	}
 
 	public int getEmployeeId() {
@@ -98,16 +109,11 @@ public class Employee {
 		this.employeeName = employeeName;
 	}
 
-	public int getEmployeeDetail() {
-		return employeeDetail;
+	public Detail getDetail() {
+		return detail;
 	}
 
-	public void setEmployeeDetail(int employeeDetail) {
-		this.employeeDetail = employeeDetail;
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
-	
-	
-	
-	
-
 }
