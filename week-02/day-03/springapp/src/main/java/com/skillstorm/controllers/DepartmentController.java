@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.models.Department;
 import com.skillstorm.repositories.DepartmentRepository;
+import com.skillstorm.services.DepartmentService;
 
 // a controller is a class that contains all the endpoints for a particular type of record
 // anything we want to be able to do with this type needs to start here
@@ -23,49 +24,44 @@ import com.skillstorm.repositories.DepartmentRepository;
 @CrossOrigin(origins = "*")				// from where am I allowed to make requests to this controller?
 public class DepartmentController {
 	
-	// this automatically injects our repository for use here
+	// this automatically injects our service for use here
 	// all instantiation and management is left to the IoC container
 	@Autowired
-	private DepartmentRepository repo;
+	private DepartmentService service;
 	
 	// an endpoint for getting all departments
 	// @GetMapping says this is a GET request
 	// return type has to match what you're getting back (or what you change it to)
 	@GetMapping
 	public Iterable<Department> getAllDepartments() {
-		return repo.findAll();
+		return service.getAllDepartments();				// now kicking to our service for the actual logic of these requests, if any
 	}
 	
 	@GetMapping("/{id}")											// can specify an additional suffix per method, curly braces indicate a path variable
 	public Department getDepartmentById(@PathVariable int id) {		// have to specify that the id variable comes from the path
-		return repo.findById(id).get();								// this will throw an Exception if there's no Department with this id
+		return service.getDepartmentById(id);							
 	}
 	
 	@PostMapping
 	public Department addDepartment(@RequestBody Department department) {
-		if (repo.existsById(department.getDepartmentId()))
-			return null;
-		else
-			return repo.save(department);
+		return service.createDepartment(department);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteDepartmentById(@PathVariable int id) {
-		repo.deleteById(id);
+		service.deleteById(id);
 	}
 	
 	@PutMapping
 	public Department updateDepartment(@RequestParam int id, @RequestParam String name) {
-//		Department temp = repo.findById(id).get();
-//		temp.setDepartmentName(name);
-//		return repo.save(temp);
-		if (!repo.existsById(id))
-			return null;
-		else
-			return repo.save(new Department(id, name));
+		return service.updateDepartment(id, name);
 	}
 	
-	
+	// an endpoint for getting our Department count
+	@GetMapping("/count")
+	public int getDepartmentCount() {
+		return service.getCountOfDepartments();
+	}
 	
 	
 	

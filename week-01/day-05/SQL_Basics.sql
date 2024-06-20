@@ -195,11 +195,35 @@ ADD COLUMN `employee_name` VARCHAR(61) GENERATED ALWAYS AS (CONCAT(employee_firs
 
 UPDATE employee SET employee_lastname = "Bigelow" WHERE employee_id = 1;
 
+# creating a new table for a one-to-one relationship
+CREATE TABLE `company`.`detail` (
+  `detail_id` INT NOT NULL AUTO_INCREMENT,
+  `detail_text` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`detail_id`));
 
+SELECT * FROM employee;
+SELECT * FROM detail;
 
+INSERT INTO detail(detail_text) VALUES("Really likes bubble gum and long walks on the beach."), 
+									  ("Eats peanut butter."), 
+                                      ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."), 
+                                      ("Consults ChatGPT regularly to decide their detail section."), 
+                                      ("Codes in Assembly."), 
+                                      ("Only knows COBOL."), 
+                                      ("Uses Notepad as an IDE.");
+                                      
+ALTER TABLE `company`.`employee` 
+ADD COLUMN `employee_detail` INT NOT NULL DEFAULT 1 AFTER `employee_name`;
 
+UPDATE employee SET employee_detail = 2 WHERE employee_id = 2;
+UPDATE employee SET employee_detail = 3 WHERE employee_id = 3;
+UPDATE employee SET employee_detail = 4 WHERE employee_id = 4;
+UPDATE employee SET employee_detail = 5 WHERE employee_id = 5;
+UPDATE employee SET employee_detail = 6 WHERE employee_id = 6;
+UPDATE employee SET employee_detail = 7 WHERE employee_id = 7;
 
+SELECT * FROM employee JOIN detail ON employee_detail = detail_id;
 
-
-
+ALTER TABLE `company`.`employee` 
+ADD UNIQUE INDEX `employee_detail_UNIQUE` (`employee_detail` ASC) VISIBLE;
 

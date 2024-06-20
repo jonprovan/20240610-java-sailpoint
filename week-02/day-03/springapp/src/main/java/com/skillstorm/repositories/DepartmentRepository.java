@@ -1,5 +1,6 @@
 package com.skillstorm.repositories;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,13 @@ import com.skillstorm.models.Department;
 public interface DepartmentRepository extends CrudRepository<Department, Integer> {
 	
 	// we can put custom methods in here
+	
+	// ordering our results by id instead of name
+	@Query(value = "SELECT * FROM department ORDER BY department_id", nativeQuery = true)  // nativeQuery lets us use familiar SQL
+	public Iterable<Department> getAllDepartmentsOrderedById();
+	
+	// getting a count of the departments
+	@Query(value = "SELECT COUNT(*) FROM department", nativeQuery = true)
+	public int countDepartments();
 
 }
