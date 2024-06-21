@@ -1,0 +1,62 @@
+<!-- this is an HTML comment -->
+
+<!-- no such thing as a multi-line comment
+        so you just have to put in returns
+        as along as the closing part is afterward -->
+
+<!-- each of the things enclosed in <> is a tag or element -->
+<!-- some tags are self-closing, like meta, meaning there's only
+        one tag in the file -->
+<!-- some tags need a closing tag, like body -->
+    <!-- first one = body, second one = /body, 
+        everything in between is the content of the tag -->
+
+
+<!DOCTYPE html> <!-- this one tells the browser what type of doc this is -->
+<html lang="en"> <!-- this one contains the content of doc -->
+
+    <head> <!-- head contains information ABOUT the page -->
+                <!-- should NOT be used for anything the user should see -->
+        <meta charset="UTF-8">  <!-- meta is for metadata/info on the page -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="HTML, CSS, Learning">
+        <meta name="description" content="My Very First HTML Page EVER!!">
+
+        <!-- this is the text that will show up in the browser tab -->
+        <title>My First HTML Page</title>
+
+        <!-- linking to an external stylesheet -->
+        <link rel="stylesheet" href="sample-css.css">
+
+        <!-- a script to run when the page loads -->
+        <script type="text/javascript">
+            console.log("Hello, World!");
+
+            function printName() {
+                console.log("Conan The Barbarian");
+            }
+        </script>
+
+        <!-- linking to an external script -->
+        <script type="text/javascript" src="myScript.js"></script>
+    </head>
+
+    <!-- the body is where all our actual visible content should go -->
+    <body>
+
+        <!-- any whitespace after the first space is ignored -->
+
+        <!-- we mark up each block of text with the tag we wish it to be -->
+        <h1>Gabe's Coffee Shop</h1>
+
+        <p>Welcome to my Coffee Shop! I'm Gabe. Lemme give you a quick tour...</p>
+
+        <p>Here's the counter! Such a fun place. Baristas work here day and night to make delicious coffee for you and your friends.</p>
+
+        <h2>About Me</h2>
+
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore, aliquam quod quae ex totam ad earum numquam sequi, provident, cum dolores maiores. Quidem corporis, error placeat harum quibusdam deserunt natus.</p>
+        
+    </body>
+
+</html>

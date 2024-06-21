@@ -2,7 +2,10 @@ package com.skillstorm.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.models.Department;
 import com.skillstorm.models.Employee;
-import com.skillstorm.repositories.DepartmentRepository;
 import com.skillstorm.services.DepartmentService;
 
 // a controller is a class that contains all the endpoints for a particular type of record
@@ -26,6 +28,21 @@ import com.skillstorm.services.DepartmentService;
 @RequestMapping("/department")			// all requests to baseUrl plus this suffix will route here
 @CrossOrigin(origins = "*")				// from where am I allowed to make requests to this controller?
 public class DepartmentController {
+	
+	// creating a logger for this class that we can use for more specific messaging in the console
+	/*
+	 * Logging in Spring has five levels:
+	 * 
+	 * ERROR -- highest-level
+	 * WARN
+	 * INFO
+	 * DEBUG
+	 * TRACE -- lowest-level
+	 * 
+	 * You can set the application and/or a specific class to display logs at a certain level or above
+	 * 
+	 */
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	// this automatically injects our service for use here
 	// all instantiation and management is left to the IoC container
@@ -37,16 +54,31 @@ public class DepartmentController {
 	// return type has to match what you're getting back (or what you change it to)
 	@GetMapping
 	public Iterable<Department> getAllDepartments() {
+//		System.out.println("Yay, I got all the Departments!"); // useful during dev...but maybe not useful enough
+		logger.debug("Yay, I got all the Departments!");
+		
 		return service.getAllDepartments();				// now kicking to our service for the actual logic of these requests, if any
 	}
 	
-	@GetMapping("/{id}")											// can specify an additional suffix per method, curly braces indicate a path variable
-	public Department getDepartmentById(@PathVariable int id) {		// have to specify that the id variable comes from the path
-		return service.getDepartmentById(id);							
+//	@GetMapping("/{id}")											// can specify an additional suffix per method, curly braces indicate a path variable
+//	public Department getDepartmentById(@PathVariable int id) {		// have to specify that the id variable comes from the path
+//		return service.getDepartmentById(id);							
+//	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Department> getDepartmentById(@PathVariable int id) {  // a ResponseEntity can contain our data but also additional structure
+		logger.debug(service.getDepartmentById(id).toString());
+		
+		return service.getDepartmentById(id);
 	}
 	
+//	@PostMapping
+//	public Department addDepartment(@RequestBody Department department) {
+//		return service.createDepartment(department);
+//	}
+	
 	@PostMapping
-	public Department addDepartment(@RequestBody Department department) {
+	public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
 		return service.createDepartment(department);
 	}
 	
