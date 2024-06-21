@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tags in HTML</title>
+</head>
+
+<body>
+
+    <h1>Tags in HTML</h1>
+
+    <!-- tags SHOULD NOT be improperly nested -->
+     <!-- each tag should be completely included in another tag, no overlaps -->
+
+    <!--
+        NON-SEMANTIC TAGS
+
+            div -- a division of the page -- block tag
+            span -- a span of text -- inline tag
+
+            A block tag takes up all the width available to it
+            It lives on a new "line"
+            Anything after it also lives on a new "line"
+
+            An inline tag goes in line with other text, images, etc.
+            It does not create a new "line"
+            It does not force things after it to go on a new "line"
+        
+        
+        SEMANTIC TAGS
+
+            All these function the same as a div
+            But, they provide more meaning about the content
+
+            main -- the main content are
+            header -- for a masthead or top section
+            nav -- for your navigation bar or area
+            footer
+            section
+            article
+            aside -- a sidebar
+
+
+        SEMANTIC TAGS WITH FORMATTING
+
+            BLOCK
+                h1-h6 -- headings
+                p -- paragraph
+                table -- tables (contains thead, tbody, tfoot, tr, etc.)
+                ol/ul -- ordered/unordered lists (contain li [list item])
+
+            INLINE
+                img -- images
+                a -- links (anchor)
+                form elements like button, input, etc.
+                strong -- bold (used to be b)
+                em -- emphasis (italics, used to be i)
+    -->
+
+    <div>My First Div</div>
+    <div>My Second Div</div>
+    <span>My First Span</span>
+    <span>My Second Span</span>
+
+    <!-- doesn't restyle based on the tag; we have to do that via CSS -->
+    <aside>For sidebar text...</aside>
+
+    <h2>H2 for a Subheader</h2>
+
+    <p>Lorem ipsum dolor sit <strong>amet consectetur</strong> adipisicing elit. Repellendus molestias dolorem, quasi atque fugiat commodi qui laboriosam ea cumque esse tenetur <em>nobis veritatis</em> quod nihil sint tempora ducimus accusantium quaerat?</p>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus molestias dolorem, quasi atque fugiat commodi qui laboriosam ea cumque esse tenetur nobis veritatis quod nihil sint tempora ducimus accusantium quaerat?</p>
+
+    <ol>
+        <li>OL Item 1</li>
+        <li>OL Item 2</li>
+        <li>OL Item 3</li>
+    </ol>
+
+    <ul>
+        <li>UL Item 1</li>
+        <li>UL Item 2</li>
+        <li>UL Item 3</li>
+    </ol>
+    
+</body>
+
+</html>
