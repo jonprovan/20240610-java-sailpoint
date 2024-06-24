@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables</title>
+</head>
+
+<body>
+
+    <h1>TABLES IN HTML</h1>
+
+    <!--
+        DO NOT use a table to lay out your entire page
+        But, they're useful for row/column organization of records, etc.
+        
+        table -- the whole table
+        thead -- the header section
+        tbody -- the body section
+        tfoot -- the footer section
+
+        tr -- a row
+        th -- a header cell (bold by default)
+        td -- (table data) for a regular cell
+
+    -->
+
+    <table>
+
+        <thead style="text-align: left;">
+            <th>Album Title</th>
+            <th>Album Artist</th>
+            <th>Album Genre</th>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Vs.</td>
+                <td>Pearl Jam</td>
+                <td>Grunge</td>
+            </tr>
+            <tr>
+                <td>Toxicity</td>
+                <td>System of a Down</td>
+                <td>Metal</td>
+            </tr>
+            <tr>
+                <td>Recovery</td>
+                <td>Eminem</td>
+                <td>Hip-Hop</td>
+            </tr>
+
+        </tbody>
+
+        <tfoot style="font-style: italic;">
+
+            <tr>
+                <td>3 Total</td>
+                <td>No duplicate artists</td>
+                <td>No duplicate genres</td>
+            </tr>
+
+        </tfoot>
+
+    </table>
+    
+</body>
+
+</html>

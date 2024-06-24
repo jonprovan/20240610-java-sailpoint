@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+
+    <style>
+        label {
+            display: inline-block;
+            width: 150px;
+            text-align: right;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>FORMS IN HTML</h1>
+
+    <!--
+        Forms take in info from the user
+        The can be complex, like a registration form/application
+        They can also be simple -- e-mail submission, search bar
+        
+        We can take in all sorts of info:
+            text
+            numbers
+            files
+            selections
+            etc.
+    -->
+
+    <!-- method is what the form will do, HTTP-request-wise
+         action is where it will do it -->
+    <form method="GET" action="http://www.google.com">
+
+        <p>Go to Google...</p>
+
+        <button type="submit">GO!</button>
+
+    </form>
+
+    <hr>
+    <hr>
+
+    <form method="POST" action="https://www.w3schools.com/action_page.php">
+
+        <div>
+            <label for="firstName">First Name: </label>
+            <input type="text" 
+                id="firstName" 
+                name="firstName"
+                placeholder="Enter your first name..."
+                maxlength="10">
+        </div>
+
+        <div>
+            <label for="lastName">Last Name: </label>
+            <input type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Enter your last name..."
+                maxlength="20">
+        </div>
+
+        <div>
+            <label for="age">Age: </label>
+            <input type="number"
+                   id="age"
+                   name="age"
+                   min="10"
+                   max="100"
+                   step="5">
+        </div>
+
+        <div>
+            <label for="faveColor">Favorite Color: </label>
+            <input type="color"
+                   id="faveColor"
+                   name="faveColor">
+        </div>
+
+        <div>
+            <label for="birthdate">Birthdate: </label>
+            <input type="date"
+                   id="birthdate"
+                   name="birthdate">
+        </div>
+
+        <!-- checkbox for single on/off selections -->
+        <div>
+            <label for="likesCats">Do I Like Cats?</label>
+            <input type="checkbox"
+                   id="likesCats"
+                   name="likesCats"
+                   value="true">  <!-- need this to pass a value besides "on" -->
+        </div>
+
+        <!-- radio buttons if you have several mutually-exclusive options -->
+        <div>
+
+            <!-- radio buttons must have the same name for each in a group -->
+            <h4>Sandwich Construction</h4>
+            <label for="mayoOnTop">Mayo On Top: </label>
+            <input type="radio"
+                   id="mayoOnTop"
+                   name="sandwichConstruction"
+                   value="Mayo On Top">
+            <label for="mayoOnTheBottom"> Mayo On The Bottom: </label>
+            <input type="radio"
+                   id="mayoOnTheBottom"
+                   name="sandwichConstruction"
+                   value="Mayo On The Bottom">
+        </div>
+
+        <!-- select lets you choose from a dropdown of options -->
+        <label for="bbqPreference">BBQ Preference: </label>
+        <select name="bbqPreference" id="bbqPreference">
+            <!-- for each option, the value gets passed, the inner text displays -->
+            <option value="">Choose a BBQ style...</option>
+            <option value="NC Vinegar-Based">NC Vinegar-Based</option>
+            <option value="Memphis">Memphis</option>
+            <option value="Korean">Korean</option>
+        </select>
+
+        <!-- 
+            thinking about how to create a category select from DB data
+
+            return a list of all categories
+            loop through to see if any have no products
+                - maybe a .filter operation to remove empty ones
+                - store that list in JS/TS
+            loop in JS through the list, grab each category's info
+                - create an option with each one
+
+            <select name="category" id="category">
+
+                <option *ngFor="let category of categories"
+                    [value]="category.name">{{category.name}}</option>
+
+            </select>
+        -->
+
+        <div>
+            <br>
+            <!-- inside a form, the button type dictates its functionality -->
+
+            <!--
+                in Angular, you'll see things more like this:
+
+                <button type="button" [click]="myMethod()">BUTTON NAME</button>
+            -->
+
+            <button type="reset">RESET FORM</button>
+            <button type="submit">Submit Form</button>
+        </div>
+
+    </form>
+    
+</body>
+
+</html>
