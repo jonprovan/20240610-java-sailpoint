@@ -1,0 +1,14 @@
+/* this is a separate CSS stylesheet
+    it can be applied to as many pages as we like */
+
+#arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ol {
+    padding-left: 24px;
+}
+
+.pizzaHeading {
+    color: red;
+}

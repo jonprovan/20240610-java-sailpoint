@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Basics</title>
+
+    <!-- a style tag for on-page styles -->
+    <style>
+
+        /* this is a CSS rule
+           it contains one or more properties/attributes
+           it also contains a selector -- 
+                which element(s) to apply this rule to */
+
+        /* this one applies to ALL h2 tags on this page */
+        h2 {
+            color: blueviolet;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        /* this one applies to the element with this id ONLY (# before name) */
+        #firstParagraph {
+            color: burlywood;
+        }
+
+        /* this one applies to ALL elements with this class added */
+        .indented {
+            margin-left: 36px;
+        }
+
+        .pink {
+            color: rgb(232, 126, 144);
+        }
+
+    </style>
+
+    <!-- rel says that the "rel"ationship of the basics.css file to this file
+            is as a stylesheet; href is where it is -->
+    <link rel="stylesheet" href="css/basics.css">
+
+</head>
+
+<body>
+
+    <!--
+        CSS = Cascading Style Sheets
+            - a set of rules for how things should look/behave
+            - they cascade through our DOM based on inheritance
+            - we can override styles in child elements/tags
+            
+            THREE PLACES WE CAN PLACE STYLES
+            - In a separate CSS file
+                - preferable -- apply it to multiple pages, central location
+            - style tag in the header
+                - for styles that only appear on one page, 
+                  can reuse for multiple tags on the same page
+            - Inline, i.e., inside a specific tag
+                - for something that only appears once on a single page
+            * we can also change/add styles via JS
+
+            THESE OVERRIDE EACH OTHER IN THE ABOVE ORDER
+                - inline overrides style tag overrides separate sheet
+                - also, for conflicting styles in the same sheet
+                    rules lower in the sheet will override earlier ones
+
+    -->
+
+    <!-- inline styling -->
+    <h1 style="color: blue;">CSS Basics</h1>
+
+    <!-- using an on-page style tag -->
+    <h2>Some things to know about CSS...</h2>
+
+    <!-- this p has an id we can refer to in our stylesheet -->
+    <p id="firstParagraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sequi deleniti molestias quasi modi! Exercitationem sed corporis beatae asperiores ullam facilis aut earum nobis eveniet iusto blanditiis, magni libero incidunt!</p>
+
+    <!-- this p is being styled via class -->
+    <p class="indented">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod in harum veritatis nam. Distinctio dicta hic nisi accusamus, iure placeat voluptatem rerum eos ipsum, quae illum laborum a sapiente aspernatur.</p>
+
+    <!-- you can have multiple classes in one class property declaration -->
+    <p class="indented pink">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi illum, fugiat ipsa, ut quibusdam dolores delectus explicabo, minima doloremque ipsum atque. Nulla quasi rem expedita maxime perferendis, ut magnam alias.</p>
+
+    <!-- this is being styled from an external sheet -->
+    <p id="arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum sapiente dicta, perspiciatis quibusdam fugiat omnis! Perspiciatis impedit quibusdam commodi quam unde error ut nihil ex tempora nam repellat, in neque.</p>
+
+    <h4 class="pizzaHeading">Best Pizza Toppings</h4>
+    <ol>
+        <li>Meatball</li>
+        <li>Spinach</li>
+        <li>Pineapple (not)</li>
+    </ol>
+    
+</body>
+
+</html>

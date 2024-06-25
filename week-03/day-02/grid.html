@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid</title>
+
+    <style>
+
+        /* removing default page margin */
+        body {
+            margin: 0px;
+        }
+
+        .grid {
+
+            display: grid;
+            /* will take up 100% of the view height (window) */
+            height: 100vh;
+            /* width: 700px; */
+
+            /* number of arguments = number of columns
+               percentages = width of each column */
+            /* grid-template-columns: 25% 25% 50%; */
+            /* can also use fr 
+                - 1 part this, 2 parts that, etc. */
+            grid-template-columns: 1fr 1fr 2fr;
+
+            /* same logic for rows */
+            grid-template-rows: 10% 40% 30% 15% 5%;
+
+        }
+
+        /* this div will take up three columns in one row */
+        .red {
+            background-color: red;
+            grid-column: span 3;
+        }
+
+        /* this div will take up 2 rows in one column */
+        .orange {
+            background-color: orange;
+            grid-row: span 2;
+        }
+
+        .yellow {
+            background-color: yellow;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .violet {
+            background-color: violet;
+        }
+
+        .gray {
+            background-color: gray;
+            grid-column: span 2;
+        }
+
+        .brown {
+            background-color: brown;
+        }
+
+        .black {
+            background-color: black;
+            color: white;
+            grid-column: span 3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- you can use a grid to lay out your entire page
+        set column widths, row widths,
+        dictate how many rows/columns something occupies, etc. -->
+
+    <section class="grid">
+
+        <div class="red">1</div>
+        <div class="orange">2</div>
+        <div class="yellow">3</div>
+        <div class="green">4</div>
+        <div class="blue">5</div>
+        <div class="violet">6</div>
+        <div class="gray">7</div>
+        <div class="brown">8</div>
+        <div class="black">9</div>
+
+    </section>
+    
+</body>
+</html>

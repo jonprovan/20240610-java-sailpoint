@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flex Box</title>
+
+    <style>
+
+        /* a class for our containing flex box */
+
+        /* display: flex makes it a flex box
+           justify-content dictates the behavior of the items in the line, spacing, etc.
+           flex-wrap says if items will wrap to the next line or not
+           flex-directions sets whether it's a row/column and whether "1" is first or last */
+        .flexbox {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        /* classes for our divs */
+        div {
+            /* width: 10px; */
+            padding: 2em;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .orange {
+            background-color: orange;
+        }
+
+        .yellow {
+            background-color: yellow;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .violet {
+            background-color: violet;
+        }
+
+        .gray {
+            background-color: gray;
+        }
+
+        .brown {
+            background-color: brown;
+        }
+
+        .black {
+            background-color: black;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>CSS Flex Box</h1>
+
+    <!--
+        a flex box allows dynamic insertion of elements
+
+        it can manage spacing for you, order, behavior
+
+        great for responsive site design, largely in a 1-D way
+    -->
+
+    <section class="flexbox">
+
+        <div class="red">1</div>
+        <div class="orange">2</div>
+        <div class="yellow">3</div>
+        <div class="green">4</div>
+        <div class="blue">5</div>
+        <div class="violet">6</div>
+        <div class="gray">7</div>
+        <div class="brown">8</div>
+        <div class="black">9</div>
+
+    </section>
+    
+</body>
+
+</html>

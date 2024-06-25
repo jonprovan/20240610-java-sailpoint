@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Selectors</title>
+
+    <style>
+
+        aside {
+            width: 120px;
+            float: right;
+            background-color: bisque;
+            padding: 10px;
+        }
+
+        /* this says ANY h2 that's ANYWHERE inside an aside will have these */
+        aside h2 {
+            margin-top: 0px;
+        }
+
+        article h2 {
+            color: rgb(20, 128, 20);
+        }
+
+        /* this says the p has to be a DIRECT CHILD of the article */
+        article > p {
+            font-size: 13px;
+        }
+
+        article section p {
+            font-style: italic;
+            color: darkred;
+        }
+
+        nav a {
+            display: inline-block;
+            background-color: darkgray;
+            padding: 1em;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* using a pseudo-selector to adjust the properties
+            when someone hovers over my link */
+        nav a:hover {
+            color: cyan;
+            background-color: cadetblue;
+            transition: 0.5s;
+        }
+
+        /* nav a:visited {
+            color: rgb(70, 33, 105);
+        } */
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>More Selectors</h1>
+
+    <nav>
+        <a href="css-basics.html">CSS Basics</a>
+    </nav>
+
+    <main>
+
+        <aside>
+            <h2>Aside Heading</h2>
+
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quidem doloribus dignissimos beatae rerum commodi voluptate modi odio harum qui accusantium, sequi vitae provident ducimus laboriosam? Beatae quam id facere.</p>
+        </aside>
+
+        <article>
+            <h2>Article Heading</h2>
+
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae quas sapiente nemo adipisci cumque explicabo quam, reprehenderit facere quisquam, quis doloremque, asperiores facilis saepe corporis! Ipsam doloremque explicabo omnis laboriosam?</p>
+
+            <section>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, sequi laborum itaque veniam omnis repudiandae recusandae eum rem maxime nisi, nostrum tempore magni dicta eveniet ipsum qui. Eos, amet blanditiis!</p>
+            </section>
+
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam neque quaerat, accusamus consectetur repudiandae vero quisquam ipsum placeat corporis, officia natus quis, aliquid voluptatum maiores fugit sunt qui voluptates facere!</p>
+        </article>
+
+    </main>
+    
+</body>
+
+</html>
