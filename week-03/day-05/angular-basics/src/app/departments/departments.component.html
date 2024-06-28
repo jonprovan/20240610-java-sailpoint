@@ -1,0 +1,29 @@
+<!-- <h2>{{ data[0].departmentName }}</h2>
+<h3>Department ID: {{ data[0].departmentId }}</h3>
+<h4>Employees:</h4>
+<ul>
+    <li>{{ data[0].employees[0].employeeFirstname }}</li>
+    <li>{{ data[0].employees[1].employeeFirstname }}</li>
+    <li>{{ data[0].employees[2].employeeFirstname }}</li>
+</ul> -->
+
+<ng-container *ngFor="let dept of data">
+
+    <!-- {{ }} to bind to a particular TS variable or property -->
+    <h2>{{ dept.departmentName }}</h2>
+    <h3>Department ID: {{ dept.departmentId }}</h3>
+    <h4 *ngIf="dept.employees.length">Employees:</h4>
+    <ul>
+        
+        <ng-container *ngFor="let emp of dept.employees">
+
+            <li>{{ emp.employeeFirstname + ' ' + emp.employeeLastname }}</li>
+
+        </ng-container>
+
+    </ul>
+
+    <br>
+
+</ng-container>
+
