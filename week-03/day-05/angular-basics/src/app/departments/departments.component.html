@@ -19,9 +19,19 @@
 
 </div>
 
-<ng-container *ngFor="let dept of data">
+<!-- more modern Angular syntax for *ngFor -->
+@for (currDept of departments; track $index) {
 
-    <!-- {{ }} to bind to a particular TS variable or property -->
+    <!-- [] binds the department property value of this card to the value of
+            department, which is the current item in the loop -->
+    <app-department-card [department]="currDept"></app-department-card>
+
+}
+
+
+
+<!-- <ng-container *ngFor="let dept of departments">
+
     <h2>{{ dept.departmentName }}</h2>
     <h3>Department ID: {{ dept.departmentId }}</h3>
     <h4 *ngIf="dept.employees.length">Employees:</h4>
@@ -37,5 +47,5 @@
 
     <br>
 
-</ng-container>
+</ng-container> -->
 

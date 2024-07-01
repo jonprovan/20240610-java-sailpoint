@@ -1,5 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Department } from '../models/department';
+import { Observable } from 'rxjs';
 
 // in Angular @something is called a Decorator
 // basically just like a Spring annotation
@@ -17,7 +19,7 @@ export class HttpService {
   url: String = 'http://localhost:8080/';
 
   // a GET request for all Departments
-  getAllDepartments() {
+  getAllDepartments(): Observable<HttpResponse<any>> {
     return this.http.get(this.url + 'department', { observe : 'response' });
   }
 
@@ -27,17 +29,22 @@ export class HttpService {
   }
 
   // a POST request to create a Department (Department object in the body)
-  createDepartment() {
+  createDepartment(): Observable<HttpResponse<any>> {
     return this.http.post(this.url + 'department', 
-                          { "departmentId": 30,
-                            "departmentName": "Test Post Department X",
-                            "employees": [] }, 
+                          new Department(
+                            123, 'Test Post Department Q', []
+                          ),
+                          // the above is equivalent to this but with an
+                          // enforced adherence to the Department format
+                          // { "departmentId": 30,
+                          //   "departmentName": "Test Post Department X",
+                          //   "employees": [] }, 
                           { observe : 'response' });
   }
 
   // a PUT request to update a Department
   // request parameters for name and id, List of employees in the body
-  updateDepartment() {
+  updateDepartment(): Observable<HttpResponse<any>> {
 
     // assembling an HttpParams object for our request parameters and setting values
     let parameters = new HttpParams()
@@ -52,7 +59,7 @@ export class HttpService {
   }
 
   // a DELETE request to delete a Department (by id as a path variable)
-  deleteDepartment() {
-    return this.http.delete(this.url + 'department/' + 28, { observe: 'response'});
+  deleteDepartment(): Observable<HttpResponse<any>> {
+    return this.http.delete(this.url + 'department/' + 34, { observe: 'response'});
   }
 }
