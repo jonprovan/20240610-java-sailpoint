@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-departments',
   standalone: true,
-  imports: [HttpClientModule, CommonModule],
+  imports: [CommonModule],
   templateUrl: './departments.component.html',
   styleUrl: './departments.component.css'
 })
@@ -23,13 +23,41 @@ export class DepartmentsComponent {
   // this injects HttpClient for us to use
   // dependency injection
   // the client is a singleton, like when we inject services in Spring
-  constructor(private http: HttpClient) {
+  constructor(private httpService: HttpService) {
     
+    this.getAllDepartments();
+  }
+
+  getAllDepartments() {
     // running a GET call, subscribing to and processing the response
-    this.http.get('http://localhost:8080/department', { observe : 'response' })
+    this.httpService.getAllDepartments()
         .subscribe(response => {
           this.data = response.body;  // storing the data locally
         });
+  }
+
+  // local methods for calling our service methods
+  getDepartmentById() {
+    this.httpService.getDepartmentById();
+  }
+
+  createDepartment() {
+    this.httpService.createDepartment().subscribe(data => {
+      // doing this inside the subscription to guarantee it happens in sequence
+      this.getAllDepartments();
+    });
+  }
+
+  updateDepartment() {
+    this.httpService.updateDepartment().subscribe(data => {
+      this.getAllDepartments();
+    });
+  }
+
+  deleteDepartment() {
+    this.httpService.deleteDepartment().subscribe(data => {
+      this.getAllDepartments();
+    });
   }
 
 }

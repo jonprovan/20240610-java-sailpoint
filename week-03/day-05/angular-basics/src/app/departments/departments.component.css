@@ -1,0 +1,17 @@
+button {
+    padding: 1em;
+    border: solid 1px black;
+    margin-right: 6px;
+    /* rounds the corners */
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: darkkhaki;
+    /* turns your cursor into a little hand */
+    cursor: pointer;
+}
+
+.buttons {
+    margin-bottom: 24px;
+}

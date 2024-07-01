@@ -211,6 +211,7 @@ INSERT INTO detail(detail_text) VALUES("Really likes bubble gum and long walks o
                                       ("Codes in Assembly."), 
                                       ("Only knows COBOL."), 
                                       ("Uses Notepad as an IDE.");
+INSERT INTO detail(detail_text) VALUES("Classic Rawk RUUUULEZ.");
                                       
 ALTER TABLE `company`.`employee` 
 ADD COLUMN `employee_detail` INT NOT NULL DEFAULT 1 AFTER `employee_name`;
@@ -226,4 +227,10 @@ SELECT * FROM employee JOIN detail ON employee_detail = detail_id;
 
 ALTER TABLE `company`.`employee` 
 ADD UNIQUE INDEX `employee_detail_UNIQUE` (`employee_detail` ASC) VISIBLE;
+
+DELETE FROM employee WHERE employee_id = 13;
+
+UPDATE detail SET detail_text = "Classic Rawk RUUUULEZ." WHERE detail_id = 8;
+
+INSERT INTO employee_certification(employee_id, certification_id) VALUES(14, 650);
 

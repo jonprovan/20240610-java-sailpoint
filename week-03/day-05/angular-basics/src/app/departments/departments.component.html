@@ -7,6 +7,18 @@
     <li>{{ data[0].employees[2].employeeFirstname }}</li>
 </ul> -->
 
+<div class="buttons">
+    <h2>CRUD Buttons</h2>
+
+    <!-- parentheses indicate an event listener; when the button "hears" a click event
+            it executes the method -->
+    <button (click)="createDepartment()">Create</button>
+    <button (click)="getDepartmentById()">Get By ID</button>
+    <button (click)="updateDepartment()">Update</button>
+    <button (click)="deleteDepartment()">Delete</button>
+
+</div>
+
 <ng-container *ngFor="let dept of data">
 
     <!-- {{ }} to bind to a particular TS variable or property -->
