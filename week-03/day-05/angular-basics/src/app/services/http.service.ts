@@ -24,16 +24,17 @@ export class HttpService {
   }
 
   // a GET request for a single Department (by id as a path variable)
-  getDepartmentById() {
-
+  getDepartmentById(departmentId: number): Observable<HttpResponse<any>> {
+    return this.http.get(this.url + 'department/' + departmentId, { observe : 'response' });
   }
 
   // a POST request to create a Department (Department object in the body)
-  createDepartment(): Observable<HttpResponse<any>> {
+  createDepartment(department: Department): Observable<HttpResponse<any>> {
     return this.http.post(this.url + 'department', 
-                          new Department(
-                            123, 'Test Post Department Q', []
-                          ),
+                          department,
+                          // new Department(
+                          //   123, 'Test Post Department Q', []
+                          // ),
                           // the above is equivalent to this but with an
                           // enforced adherence to the Department format
                           // { "departmentId": 30,
@@ -59,7 +60,7 @@ export class HttpService {
   }
 
   // a DELETE request to delete a Department (by id as a path variable)
-  deleteDepartment(): Observable<HttpResponse<any>> {
-    return this.http.delete(this.url + 'department/' + 34, { observe: 'response'});
+  deleteDepartment(departmentId: number): Observable<HttpResponse<any>> {
+    return this.http.delete(this.url + 'department/' + departmentId, { observe: 'response'});
   }
 }

@@ -12,10 +12,72 @@
 
     <!-- parentheses indicate an event listener; when the button "hears" a click event
             it executes the method -->
+    <button (click)="getAllDepartments()">Get All</button>
     <button (click)="createDepartment()">Create</button>
-    <button (click)="getDepartmentById()">Get By ID</button>
     <button (click)="updateDepartment()">Update</button>
-    <button (click)="deleteDepartment()">Delete</button>
+    <!-- <button (click)="deleteDepartment()">Delete</button> -->
+
+</div>
+
+<div class="buttons">
+
+<h2>Get Department By ID</h2>
+
+    <!-- a template-driven form, as opposed to a reactive form -->
+    <!-- you can add #ids to the form and individual fields to reference them -->
+    <form #idForm>
+
+        <label for="formDepartmentId">Department ID to Get: </label>
+        <input type="number" 
+               id="formDepartmentId" 
+               name="formDepartmentId"
+               [(ngModel)]="formDepartmentId" #formId>
+
+        <button (click)="getDepartmentById()">SUBMIT</button>
+        <button (click)="idForm.reset()">RESET</button>
+        
+    </form>
+
+</div>
+
+<div class="buttons">
+
+    <h2>Create Department</h2>
+
+    <form>
+
+        <label for="postFormId">Department ID: </label>
+        <input type="number"
+               id="postFormId"
+               name="postFormId"
+               [(ngModel)]="formDepartment.departmentId">
+
+        <label for="postFormName">Department Name: </label>
+        <input type="text"
+               id="postFormName"
+               name="postFormName"
+               [(ngModel)]="formDepartment.departmentName">
+
+       <!-- disabling our button if the entered name or ID is a duplicate -->
+        <button (click)="createDepartment()"
+                [disabled]="departmentNames.includes(formDepartment.departmentName)
+                         || departmentIds.includes(formDepartment.departmentId)">SUBMIT</button>
+        
+        @if (departmentIds.includes(formDepartment.departmentId)) {
+            <div style="color: red">
+                Department ID already exists!
+            </div>
+        }
+
+        <!-- some manual validation, checking if the name already exists -->
+        <!-- this div only appears if the name exists already -->
+        @if (departmentNames.includes(formDepartment.departmentName)) {
+            <div style="color: red">
+                Department Name already exists!
+            </div>
+        }
+
+    </form>
 
 </div>
 
@@ -24,7 +86,8 @@
 
     <!-- [] binds the department property value of this card to the value of
             department, which is the current item in the loop -->
-    <app-department-card [department]="currDept"></app-department-card>
+    <app-department-card [department]="currDept"
+                         (deleteDepartmentEvent)="processDeleteEvent($event)"></app-department-card>
 
 }
 

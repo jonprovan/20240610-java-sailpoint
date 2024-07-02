@@ -5,7 +5,7 @@ article {
     border-radius: 10px;
     display: inline-block;
     margin: 0px 10px 10px 0px;
-    min-height: 160px;
+    min-height: 200px;
     vertical-align: top;
 }
 
@@ -20,4 +20,16 @@ article h3 {
 article ul {
     margin-left: 1.5em;
     font-size: 12px;
+}
+
+button {
+    padding: .5em;
+    border: solid 1px black;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: darkkhaki;
+    cursor: pointer;
 }

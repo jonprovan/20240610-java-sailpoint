@@ -1,4 +1,9 @@
 <nav>
     <a routerLink="" alt="Link to Home Page">HOME</a>
     <a routerLink="departments" alt="Link to Departments Page">DEPARTMENTS</a>
+
+    @if (departmentName) {
+        <span>Favorite Department: {{ departmentName }}</span>
+    }
+    
 </nav>

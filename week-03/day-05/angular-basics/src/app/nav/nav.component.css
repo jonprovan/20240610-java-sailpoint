@@ -15,3 +15,10 @@ nav a {
 nav a:hover {
     background-color: rgba(85, 107, 47, 0.5);
 }
+
+nav span {
+    font-style: italic;
+    font-size: 15px;
+    font-weight: bold;
+    color: blue;
+}
