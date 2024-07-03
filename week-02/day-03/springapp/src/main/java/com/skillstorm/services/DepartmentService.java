@@ -37,7 +37,7 @@ public class DepartmentService {
 	public ResponseEntity<Department> getDepartmentById(int id) {
 		if (!repo.existsById(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-								 .header("Error", "A Department with this ID doesn't exist!")
+								 .header("error", "A Department with this ID doesn't exist!")
 								 .header("Instructions", "Do better next time...")
 								 .body(null);
 		}

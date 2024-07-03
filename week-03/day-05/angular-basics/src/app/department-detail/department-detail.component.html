@@ -1,0 +1,66 @@
+<h2>DETAILS FOR X DEPARTMENT</h2>
+
+<!-- department name
+     department id
+     table of employees
+     - id
+     - first name
+     - last name
+     - age
+     - detail
+     - # of certficatiions -->
+
+<h3>Department ID {{ dept.departmentId }}: {{ dept.departmentName }}</h3>
+
+@if (dept.employees.length) {
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Detail</th>
+                <th>Cert Count</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (emp of dept.employees; track $index) {
+                <tr [ngClass] = "{
+                    'darkGray': $index %2 === 0,
+                    'lightGray': $index %2 === 1
+                }">
+                    <td class="centered">{{ emp.employeeId }}</td>
+                    <td>{{ emp.employeeFirstname + ' ' + emp.employeeLastname }}</td>
+                    <td class="centered">{{ emp.employeeAge }}</td>
+                    <td>{{ emp.detail.detailText }}</td>
+                    <td class="centered">{{ emp.certifications.length }}</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+} @else {
+    <p>This department has no employees.</p>
+}
+
+<h3>Update This Department</h3>
+
+<!-- a form for our post request -->
+<form>
+
+    <label for="updateId">Department ID: </label>
+    <input type="number" id="updateId" name="updateId" 
+           [(ngModel)] = 'updatedDepartment.departmentId'>
+
+    <label for="updateName">Department Name: </label>
+    <input type="text" id="updateName" name="updateName" 
+           [(ngModel)] = 'updatedDepartment.departmentName'>
+
+    <button (click)="updateDepartment()">UPDATE</button>
+
+</form>
+

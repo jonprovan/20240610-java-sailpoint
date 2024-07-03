@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DepartmentsComponent } from './departments/departments.component';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 
 // creating routes for our router outlet
 // each "page" needs a route
@@ -15,5 +16,12 @@ export const routes: Routes = [
     {
         path: 'departments',
         component: DepartmentsComponent
+    },
+    // this component is accessed using a path variable called id
+    // we can either directly enter the URL with an id
+    // or, we can route to it internally
+    {
+        path: 'department/:id',
+        component: DepartmentDetailComponent
     }
 ];

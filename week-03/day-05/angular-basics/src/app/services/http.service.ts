@@ -45,12 +45,12 @@ export class HttpService {
 
   // a PUT request to update a Department
   // request parameters for name and id, List of employees in the body
-  updateDepartment(): Observable<HttpResponse<any>> {
+  updateDepartment(department: Department): Observable<HttpResponse<any>> {
 
     // assembling an HttpParams object for our request parameters and setting values
     let parameters = new HttpParams()
-                         .set('id', '25')
-                         .set('name', 'Fully Updated Department');
+                         .set('id', department.departmentId)
+                         .set('name', department.departmentName);
 
     // the params object gets inserted into the options object as the params property
     return this.http.put(this.url + 'department', 

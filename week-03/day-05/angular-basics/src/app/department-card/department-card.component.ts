@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Department } from '../models/department';
 import { DataPassService } from '../services/data-pass.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-department-card',
@@ -12,7 +13,8 @@ import { DataPassService } from '../services/data-pass.service';
 export class DepartmentCardComponent {
 
   // injecting our DataPassService so we can send a fave dept to it
-  constructor(private dataPassService: DataPassService) {}
+  constructor(private dataPassService: DataPassService,
+              private router: Router) {}
 
   // this decorator allows us to take input in from the parent component
   // and assign it a variable for this component
@@ -34,6 +36,11 @@ export class DepartmentCardComponent {
 
   sendFavoriteDepartment() {
     this.dataPassService.updateFavoriteDepartment(this.department);
+  }
+
+  // this method uses our Router to navigate to the detail page for this specific Department
+  editDepartment() {
+    this.router.navigate(['department/' + this.department.departmentId]);
   }
 
 }
