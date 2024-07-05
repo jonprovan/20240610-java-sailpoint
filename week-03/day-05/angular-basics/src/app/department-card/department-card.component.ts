@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Department } from '../models/department';
 import { DataPassService } from '../services/data-pass.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ShortenPipe } from '../custom-pipes/shorten.pipe';
 
 @Component({
   selector: 'app-department-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, ShortenPipe],
   templateUrl: './department-card.component.html',
   styleUrl: './department-card.component.css'
 })

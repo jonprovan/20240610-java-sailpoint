@@ -1,0 +1,22 @@
+<h2>PIPES IN ANGULAR</h2>
+
+<ul>
+    @for (date of dates; track $index) {
+        <!-- this syntax uses the pipe to transform our dates -->
+        <!-- variable | typeofpipe : params -->
+        <li>{{ date | date : 'longDate' }}</li>
+    }
+</ul>
+
+<form>
+
+    <label for="dateToAdd">Date To Add: </label>
+    <input type="text" id="dateToAdd"
+                       name="dateToAdd"
+                       [(ngModel)]="dateToAdd">
+
+    <button (click)="addDate()">ADD DATE</button>
+
+</form>
+
+

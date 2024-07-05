@@ -1,7 +1,7 @@
 <article>
 
     <!-- binding to properties from our TS file -->
-    <h3>{{ department.departmentName }}</h3>
+    <h3>{{ department.departmentName | shorten : 17 : true }}</h3>
     <h4>Department ID: {{ department.departmentId }}</h4>
     <h5>Employees:</h5>
     <ul>
