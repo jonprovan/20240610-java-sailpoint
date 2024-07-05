@@ -1,0 +1,74 @@
+<h2>DETAILS</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Detail ID</th>
+            <th>Detail Text</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (detail of details; track $index) {
+            <tr>
+                <td>{{ detail.detailId }}</td>
+                <td>{{ detail.detailText }}</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h3>CREATE A NEW DETAIL</h3>
+
+<form [formGroup]="createDetailForm">
+
+    <div>
+        <label for="detailText">Detail Text: </label>
+        <input type="text" 
+            id="detailText" 
+            name="detailText"
+            placeholder="Enter detail text here..."
+            formControlName="detailText">
+    </div>
+
+    <div>
+        <label for="detailFun">Detail Fun: </label>
+        <input type="text" 
+            id="detailFun" 
+            name="detailFun"
+            placeholder="Enter detail fun here..."
+            formControlName="detailFun">
+    </div>
+
+    <!-- if ANYTHING about the form is invalid, it won't allow us to submit -->
+    <button (click)="createNewDetail()"
+            [disabled]="createDetailForm.invalid">SUBMIT</button>
+
+    <!-- if the user has edited the field
+         or clicked in it and left
+         and the field is invalid in some way
+         this block will display and show the appropriate message -->
+    @if ((detailText?.touched || detailText?.dirty) && detailText?.invalid) {
+        <div style="color: red; font-weight: bold;">
+
+            @if (detailText?.errors?.['required']) {
+                Detail text is required!
+            } @else if(detailText?.errors?.['minlength']) {
+                Detail text is under 10 characters!
+            } @else {
+                Detail text is over 20 characters!
+            }
+            
+        </div>
+    }
+
+    @if (( detailFun?.touched || detailFun?.dirty) && detailFun?.invalid) {
+        <div style="color: red; font-weight: bold;">
+            Detail fun is required!
+        </div>
+    }
+
+</form>
+
+

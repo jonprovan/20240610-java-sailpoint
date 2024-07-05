@@ -63,4 +63,14 @@ export class HttpService {
   deleteDepartment(departmentId: number): Observable<HttpResponse<any>> {
     return this.http.delete(this.url + 'department/' + departmentId, { observe: 'response'});
   }
+
+  // creating a detail
+  createDetail(detailText: string): Observable<HttpResponse<any>> {
+    return this.http.post(this.url + 'detail/' + detailText, {}, { observe: 'response' });
+  }
+
+  // getting all details
+  getAllDetails(): Observable<HttpResponse<any>> {
+    return this.http.get(this.url + 'detail', { observe: 'response' });
+  }
 }

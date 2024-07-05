@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 import { PipesComponent } from './pipes/pipes.component';
+import { DetailsComponent } from './details/details.component';
 
 // creating routes for our router outlet
 // each "page" needs a route
@@ -28,5 +29,9 @@ export const routes: Routes = [
     {
         path: 'pipes',
         component: PipesComponent
+    },
+    {
+        path: 'details',
+        component: DetailsComponent
     }
 ];

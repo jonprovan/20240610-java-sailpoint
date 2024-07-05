@@ -1,0 +1,45 @@
+th, td {
+    text-align: left;
+}
+
+th {
+    min-width: 100px;
+}
+
+h3 {
+    margin: 1em 0em;
+}
+
+button {
+    padding: 1em;
+    border: solid 1px black;
+    margin-right: 6px;
+    /* rounds the corners */
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: darkkhaki;
+    /* turns your cursor into a little hand */
+    cursor: pointer;
+}
+
+.buttons {
+    margin-bottom: 24px;
+}
+
+input {
+    border: solid 1px black;
+    font-size: 16px;
+    width: 350px;
+    margin-right: 24px;
+    padding: .5em;
+}
+
+form {
+    margin-bottom: 24px;
+}
+
+form div {
+    margin-bottom: 20px;
+}

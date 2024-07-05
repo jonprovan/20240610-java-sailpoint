@@ -16,5 +16,10 @@ public class DetailService {
 	public Iterable<Detail> getAllDetails() {
 		return repo.findAll();
 	}
+	
+	// create one
+	public Detail createDetail(String detail_text) {
+		return repo.save(new Detail(0, detail_text, null));
+	}
 
 }
