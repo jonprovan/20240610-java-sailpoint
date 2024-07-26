@@ -9,6 +9,13 @@
           <FullPage title="Example Plugin" />
         </value>
       </entry>
+      <entry key="restResources">
+      	<value>
+      		<List>
+      			<String>com.skillstorm.rest.OfficeResource</String>
+      		</List>
+      	</value>
+      </entry>
       <entry key="settings">
         <value>
           <List>
