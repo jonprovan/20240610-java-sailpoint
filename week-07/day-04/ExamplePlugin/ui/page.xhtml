@@ -19,7 +19,21 @@
 			
 			<p id="myParagraph">Here's my plugin...and I am *so* proud of it.</p>
 			
-			<button onclick="changeParagraph()">CHANGE PARAGRAPH</button>
+			<button class="block" onclick="changeParagraph()">CHANGE PARAGRAPH</button>
+			
+			<h2>Create A New Office</h2>
+			
+			<form>
+			
+				<label class="block" for="department">Department</label>
+				<input class="block input" type="text" name="department" id="department" />
+				
+				<label class="block" for="address">Address</label>
+				<input class="block input" type="text" name="address" id="address" />
+				
+				<button class="block" type="submit" onclick="createOffice()">CREATE</button>
+			
+			</form>
 			
 			<!-- to use .js scripts that manipulate the visuals, call the script here and use this prefix -->
 			<script src="#{plugins.requestContextPath}/plugin/ExamplePlugin/ui/js/example-plugin.js"></script>
