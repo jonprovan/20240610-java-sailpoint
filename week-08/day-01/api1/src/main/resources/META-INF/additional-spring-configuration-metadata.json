@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "api2.username",
+    "type": "java.lang.String",
+    "description": "A description for 'api2.username'"
+  },
+  {
+    "name": "api2.password",
+    "type": "java.lang.String",
+    "description": "A description for 'api2.password'"
+  }
+]}
