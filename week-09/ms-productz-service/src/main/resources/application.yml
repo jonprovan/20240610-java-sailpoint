@@ -1,0 +1,11 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: ms-products-service
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka # Fallback in case one is not presented
