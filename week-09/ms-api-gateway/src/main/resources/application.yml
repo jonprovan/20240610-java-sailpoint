@@ -13,11 +13,37 @@ spring:
         uri: lb://ms-products-service
         predicates:
         - Path=/products/**
-#      - id: adf
-#        uri: adfa
+        filters:
+        - name: CircuitBreaker # This is necessary to be this
+          args:
+            name: productFallbackController
+            fallbackUri: forward:/fallback/products
+#      - id: ms-fallback-products-service-route
+#        uri: lb://ms-fallback-products-service
 #        predicates:
-#        - Path=/recommendations/**
-        
+#        - Path=/fallback/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+        - info
+        - metrics
+        - beans
+  endpoint:
+    health:
+      group:
+        system:
+          show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      productFallbackController:
+        wait-duration-in-open-state: 15000
+            
 eureka:
   client:
     service-url:

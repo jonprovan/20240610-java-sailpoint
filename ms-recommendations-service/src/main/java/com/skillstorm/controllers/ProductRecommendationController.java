@@ -12,9 +12,9 @@ import com.skillstorm.dtos.ProductResponse;
 public class ProductRecommendationController {
 	
 	List<ProductResponse> products = Arrays.asList(
-			new ProductResponse("chair"),
-			new ProductResponse("sofa"),
-			new ProductResponse("soap")
+			new ProductResponse(1, "chair", "it's a chair"),
+			new ProductResponse(2, "sofa", "sofa sofa sofa"),
+			new ProductResponse(3, "soap", "we found dove in a soapless place")
 		);
 
 	@GetMapping("/products/recommendations")
