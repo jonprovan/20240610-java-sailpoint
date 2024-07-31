@@ -8,21 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.dtos.ProductResponse;
+import com.skillstorm.services.ProductsService;
 
 @RestController
 @RequestMapping("/products")
 public class ProductsController {
 	
-	List<ProductResponse> products = Arrays.asList(
-				new ProductResponse("chair"),
-				new ProductResponse("sofa"),
-				new ProductResponse("soap")
-			);
+	private final ProductsService productsService;
+	
+	public ProductsController(ProductsService productsService) {
+		this.productsService = productsService;
+	}
 	
 	// /products
 	@GetMapping
 	public List<ProductResponse> getAllProducts() {
-		return products;
+		// I want to call the recommendations service to get this data
+//		return products;
+		return productsService.findRecommendedProducts();
 	}
 
 }
