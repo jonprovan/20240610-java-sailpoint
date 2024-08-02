@@ -1,1 +1,29 @@
-<p>token works!</p>
+<form>
+    <div>
+        <label for="signupEmail">E-mail: </label>
+        <input type="email" id="signupEmail" name="signupEmail" [(ngModel)]="signupEmail">
+    </div>
+    <div>
+        <label for="signupPassword">Password: </label>
+        <input type="password" id="signupPassword" name="signupPassword" [(ngModel)]="signupPassword">
+    </div>
+    <div>
+        <label for="signupFullName">Full Name: </label>
+        <input type="text" id="signupFullName" name="signupFullName" [(ngModel)]="signupFullName">
+    </div>
+    <button (click)="signup()">Sign Up</button>
+</form>
+
+<form>
+    <div>
+        <label for="loginEmail">E-mail: </label>
+        <input type="email" id="loginEmail" name="loginEmail" [(ngModel)]="loginEmail">
+    </div>
+    <div>
+        <label for="loginPassword">Password: </label>
+        <input type="password" id="loginPassword" name="loginPassword" [(ngModel)]="loginPassword">
+    </div>
+    <button (click)="login()">Log In</button>
+</form>
+
+<button (click)="getUsers()">Get Users</button>
