@@ -24,14 +24,15 @@ export class AuthInterceptor implements HttpInterceptor {
     // cloning our request and adding our auth header
     if(this.token) {
 
-    let request2 = request.clone({
-      headers: request.headers.set('Authorization', 'Bearer ' + this.token)
-    });
-    
-    // checking out our outgoing headers
-    console.log(request2.headers);
+      let request2 = request.clone({
+        headers: request.headers.set('Authorization', 'Bearer ' + this.token)
+      });
+      
+      // checking out our outgoing headers
+      console.log(request2.headers);
 
-    return next.handle(request2);
+      return next.handle(request2);
+
     } else {
       console.log(request.headers)
       return next.handle(request);

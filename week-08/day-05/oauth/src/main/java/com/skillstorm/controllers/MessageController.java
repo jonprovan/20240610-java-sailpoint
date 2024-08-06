@@ -1,8 +1,15 @@
 package com.skillstorm.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.skillstorm.models.Message;
 
@@ -10,9 +17,38 @@ import com.skillstorm.models.Message;
 @RequestMapping("/message")
 public class MessageController {
 	
+	@Value("${OAUTH_ISSUER}")
+	private String issuer;
+	
+	@Value("${OAUTH_CLIENT_ID}")
+	private String clientId;
+	
+	@Value("${OAUTH_CLIENT_SECRET}")
+	private String clientSecret;
+	
+	@Value("${OAUTH_AUDIENCE}")
+	private String audience;
+	
 	@GetMapping("/token")
-	public Message getToken() {
-		return new Message("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlpkT056VjBva25hOW9EYWdKTnp6SyJ9.eyJpc3MiOiJodHRwczovL2Rldi13dXdvajBybjI0dGNqMWUyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJyZmdwVHJzMUdBY1pNWFkwUDNWOGZrVG1DRGNxcHdxbUBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aC1kZW1vLXNlcnZlciIsImlhdCI6MTcyMjk1Nzk0NSwiZXhwIjoxNzIzMDQ0MzQ1LCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJyZmdwVHJzMUdBY1pNWFkwUDNWOGZrVG1DRGNxcHdxbSJ9.BrGKj8V47ndnefxAOsckYMvWdJyZbG0FK5PhBv2QHoU5vjCzx1iv_2KKtbu56XlobMkQ8FnZntcDGI34Sxe7ZKQl--ijSvipBTcsfI4a7HCKiC7ZDS8qi_sTaNX23oDBdLFq9VM5IPreV55oO5rnO2L7XphvLNz5k5B7oG9B67VGpo4jXpXe_mbBlCJmaKefjSNgaCYuHdc_qDcxoQjM8aDp_3sO94iXawEcEw0EuKAu89A72E09dUeJjeP7OV0Cb5lO9ASEgRf17ySiZWkElIWJnyHBvLqVX_yeInm6vE2UdSEepTBWALZAVOgrh2QcxUbLi71GwPuKES-D7vomkA");
+	
+	// getting our token from the OAuth provider/issuer
+	// would change ResponseEntity type as well if you were using a DTO
+	public ResponseEntity<String> getToken() {
+		RestTemplate template = new RestTemplate();
+		// must add headers for this particular provider, or it won't return what we want
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+		// in practice, should package this up as some kind of DTO, then send that
+		String body = "{"
+				+ "\"client_id\":\"" + clientId + "\","
+				+ "\"client_secret\":\"" + clientSecret + "\","
+				+ "\"audience\":\"" + audience + "\","
+				+ "\"grant_type\":\"client_credentials\""
+				+ "}";
+		HttpEntity<String> entity = new HttpEntity<>(body, headers);
+		// if I had a DTO for the response (an object with access_token, expires_in, and token_type properties
+		// I'd use MyDTO.class for the last parameter
+		return template.exchange(issuer + "oauth/token", HttpMethod.POST, entity, String.class);
 	}
 	
 	@GetMapping("/public")

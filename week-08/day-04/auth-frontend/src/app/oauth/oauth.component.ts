@@ -21,19 +21,12 @@ export class OauthComponent {
   }
 
   getToken() {
-    // need to bypass CORS by going through backend
-    this.http.post<any>('https://dev-wuwoj0rn24tcj1e2.us.auth0.com/oauth/token', 
-                   this.tokenRequestBody,
-                   { observe: 'response' }).subscribe(data => {
-                    console.log(data);
-                    this.tokenService.setToken(data.body.access_token);
-                   })
-
-    // this.http.get<any>("http://localhost:9001/message/token", { observe: 'response' })
-    //         .subscribe(data => {
-    //           console.log(data);
-    //           this.tokenService.setToken(data.body.message);
-    //         })
+    // bypassing Auth provider's possible CORS filter by going through backend
+    this.http.get<any>("http://localhost:9001/message/token", { observe: 'response' })
+            .subscribe(data => {
+              console.log(data);
+              this.tokenService.setToken(data.body.access_token);
+            })
   }
 
   getPublicMessage() {
