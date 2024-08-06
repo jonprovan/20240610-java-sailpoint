@@ -17,7 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GlobalProblemHandler {
 	
 	// for a certain type of problem, here's a method to handle it
+	// this annotation is for what response code we'll return to the user
 	@ResponseStatus(HttpStatus.NOT_FOUND)
+	// this annotation is for which error(s)/exception(s) will trigger this method
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public Message notFound(HttpServletRequest req, Exception e) {
 		return new Message("Not found");
