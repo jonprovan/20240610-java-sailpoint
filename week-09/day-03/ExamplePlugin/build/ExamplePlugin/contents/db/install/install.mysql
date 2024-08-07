@@ -1,0 +1,21 @@
+-- this script runs when our plugin is installed, creating a table and adding some records to it
+-- NOTE: SailPoint does NOT like # comments, only -- ones!!
+
+CREATE TABLE ep_plugin_office(
+	id int NOT NULL AUTO_INCREMENT,
+    department VARCHAR(256) NOT NULL,
+    address VARCHAR(256) NOT NULL,
+    PRIMARY KEY(id)
+)ENGINE=InnoDB;
+
+-- must specify engine as above, or the plugin installation will not work (do this for every table)
+
+-- using the auto-generated syntax is fine as well
+-- CREATE TABLE `identityiqplugin`.`ep_plugin_office` (
+--   `id` INT NOT NULL AUTO_INCREMENT,
+--   `department` VARCHAR(256) NOT NULL,
+--   `address` VARCHAR(256) NOT NULL,
+--   PRIMARY KEY (`id`));
+
+INSERT INTO ep_plugin_office (department, address)
+	VALUES ("Training", "Caldwell, NJ"), ("Development", "Lake Mary, FL"), ("Entertainment", "Redmond, WA");
