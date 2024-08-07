@@ -35,6 +35,9 @@ async function createOffice() {
 	// refreshing our table
 	await getAllOffices();
 	
+	document.getElementById('department').value = '';
+	document.getElementById('address').value = '';
+	
 }
 
 // this function must be async because we're going to be awaiting within it
@@ -71,10 +74,32 @@ async function getAllOffices() {
 	
 	for (let office of responseJSON) {
 		let row = document.createElement('tr');
-		row.innerHTML = '<td>' + office.id + '</td><td>' + office.department + '</td><td>' + office.address + '</td>';
+		row.innerHTML = '<td>' + office.id + '</td><td>' + office.department + '</td><td>' + office.address + '</td>'
+					+ '<td><button type="button" onclick="deleteOffice(' + office.id + ')">X</button></td>';
 		document.getElementById('table-body').appendChild(row);
 	}
 }
+
+// a function for deleting an office when clicking on the button in the row
+async function deleteOffice(id) {
+	
+	const url = PluginHelper.getPluginRestUrl('OfficePlugin/deleteById/' + id);
+	
+	const newHeaders = new Headers();
+	newHeaders.append("X-XSRF-TOKEN", PluginHelper.getCsrfToken());
+	
+	const options = {
+		method: "DELETE",
+		headers: newHeaders,
+		redirect: "follow"
+	};
+	
+	await fetch(url, options);
+	
+	await getAllOffices();
+}
+
+
 
 // the code below will actually run when the page loads
 // we call our getAllOffices function by default on load

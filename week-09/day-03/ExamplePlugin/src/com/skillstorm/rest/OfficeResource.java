@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -76,6 +77,14 @@ public class OfficeResource extends BasePluginResource {
 	// name in the PathParam annotation matches with whatever's in the path above
 	public Office getOfficeByDepartment(@PathParam("department") String department) throws GeneralException {
 		return service().getOfficeByDepartment(department);
+	}
+	
+	// an endpoint for deleting an office by ID
+	@DELETE
+	@Path("deleteById/{id}")
+	@AllowAll
+	public void deleteOfficeById(@PathParam("id") int id) throws GeneralException {
+		service().deleteOfficeById(id);
 	}
 	
 }

@@ -71,7 +71,7 @@ public class OfficeService {
 		
 	}
 	
-	// a post endpoint for creating a new office
+	// a post method for creating a new office
 	public Office createOffice(String department, String address) throws GeneralException {
 		
 		Connection connection = null;
@@ -96,7 +96,7 @@ public class OfficeService {
 		
 	}
 	
-	// a GET endpoint for retrieving an office via department
+	// a GET method for retrieving an office via department
 	public Office getOfficeByDepartment(String department) throws GeneralException {
 		
 		Connection connection = null;
@@ -122,14 +122,26 @@ public class OfficeService {
 		}
 		
 	}
+	
+	// a DELETE method for removing a department by ID
+	public void deleteOfficeById(int id) throws GeneralException {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = pluginContext.getConnection();
+			statement = PluginBaseHelper.prepareStatement(connection, "DELETE FROM ep_plugin_office WHERE id = ?", id);
+			
+			statement.executeUpdate();
+			
+		} catch(SQLException e) {
+			throw new GeneralException(e);
+		} finally {
+			IOUtil.closeQuietly(statement);
+			IOUtil.closeQuietly(connection);
+		}
+		
+	}
 
 }
-
-
-
-
-
-
-
-
-
