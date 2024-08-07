@@ -70,6 +70,58 @@ public class OfficeService {
 		}
 		
 	}
+	
+	// a post endpoint for creating a new office
+	public Office createOffice(String department, String address) throws GeneralException {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = pluginContext.getConnection();
+			statement = PluginBaseHelper.prepareStatement(connection, "INSERT INTO ep_plugin_office (department, address) "
+																	+ "VALUES (?, ?)", department, address);
+			
+			// the line to execute the statement is different for any non-GET request
+			statement.executeUpdate();
+			
+			return getOfficeByDepartment(department);
+			
+		} catch(SQLException e) {
+			throw new GeneralException(e);
+		} finally {
+			IOUtil.closeQuietly(statement);
+			IOUtil.closeQuietly(connection);
+		}
+		
+	}
+	
+	// a GET endpoint for retrieving an office via department
+	public Office getOfficeByDepartment(String department) throws GeneralException {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = pluginContext.getConnection();
+			statement = PluginBaseHelper.prepareStatement(connection, "SELECT * FROM ep_plugin_office WHERE department = ?", department);
+			
+			ResultSet result = statement.executeQuery();
+			
+			result.next();
+			
+			return new Office(result.getInt("id"), 
+					   		  result.getString("department"), 
+					   		  result.getString("address"));
+			
+		} catch(SQLException e) {
+			throw new GeneralException(e);
+		} finally {
+			IOUtil.closeQuietly(statement);
+			IOUtil.closeQuietly(connection);
+		}
+		
+	}
 
 }
 

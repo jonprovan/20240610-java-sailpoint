@@ -1,9 +1,13 @@
 package com.skillstorm.rest;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -17,6 +21,10 @@ import sailpoint.tools.GeneralException;
 // this class is essentially a controller
 // it sets up endpoints we can hit internally and/or externally to have access to plugin functionality
 // some different annotations than we've seen before, but similar concepts
+
+// BASE URL FOR ALL PLUGIN ENDPOINTS (if hitting them from outside, Postman, etc.
+// http://localhost:8080/identityiq/plugin/rest/
+// or substitute your server's IP/URL for the first part
 
 @Path("OfficePlugin")
 public class OfficeResource extends BasePluginResource {
@@ -33,7 +41,7 @@ public class OfficeResource extends BasePluginResource {
 		return new OfficeService(this);
 	}
 	
-	// a method for getting all Offices
+	// an endpoint for getting all Offices
 	@GET									// specifies this method will work for GET requests
 	@Path("getall")							// specifies a path to tack on to the overall class path, so "OfficePlugin/getall"
 	@AllowAll								// specifies that anyone who's logged into IIQ can access this method
@@ -42,6 +50,32 @@ public class OfficeResource extends BasePluginResource {
 	public List<Office> getAllOffices() throws GeneralException {
 		// getting our service using our method, then calling the getAllOffices() method
 		return service().getAllOffices();
+	}
+	
+	// an endpoint for creating a new office
+	@POST
+	@Path("createOne")
+	@AllowAll
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	// taking in a generic map here to get the values from our JSON object
+	// not in Spring, so can't use @RequestBody in the usual way
+	public Office createOffice(Map<String, String> body) throws GeneralException {
+		// extracting the values from the map for our parameters
+		String department = body.get("department");
+		String address = body.get("address");
+		
+		return service().createOffice(department, address);
+	}
+	
+	// an endpoint for getting via department, using a PathParam
+	@GET
+	@Path("getByDepartment/{department}")
+	@AllowAll
+	@Produces(MediaType.APPLICATION_JSON)
+	// name in the PathParam annotation matches with whatever's in the path above
+	public Office getOfficeByDepartment(@PathParam("department") String department) throws GeneralException {
+		return service().getOfficeByDepartment(department);
 	}
 	
 }

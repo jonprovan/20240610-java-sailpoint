@@ -4,8 +4,37 @@ function changeParagraph() {
 	console.log(document.getElementById("myParagraph").innerText);
 }
 
-function createOffice() {
-	console.log("Creating...");
+async function createOffice() {
+	
+	const url = PluginHelper.getPluginRestUrl('OfficePlugin/createOne');
+	
+	const newHeaders = new Headers();
+	newHeaders.append("X-XSRF-TOKEN", PluginHelper.getCsrfToken());
+	// we need this here, because our endpoint is expecting JSON in its @Consumes annotation
+	newHeaders.append("Content-Type", "application/json");
+	
+	// set up body
+	let department = document.getElementById('department').value;
+	let address = document.getElementById('address').value;
+	
+	const body = JSON.stringify({ "department": department, "address": address });
+	
+	// set up options
+	const options = {
+		method: "POST",
+		headers: newHeaders,
+		body: body,
+		redirect: "follow"
+	}
+	
+	// handling responses to the request, just printing them out for now
+	await fetch(url, options)
+		.then(data => console.log(data))
+		.catch(err => console.log(err));
+		
+	// refreshing our table
+	await getAllOffices();
+	
 }
 
 // this function must be async because we're going to be awaiting within it
@@ -25,8 +54,9 @@ async function getAllOffices() {
 	// setting up our options block
 	const options = {
 		method: "GET",
-		headers: newHeaders
-	}
+		headers: newHeaders,
+		redirect: "follow"
+	};
 	
 	// using fetch to actually make the call
 	// this is async, so we must await before continuing
@@ -35,6 +65,9 @@ async function getAllOffices() {
 	// unpacking the JSON from the response
 	// must await this, too, since it deals with a Promise
 	const responseJSON = await response.json();
+	
+	// clearing the table body before getting all offices and appending them as children
+	document.getElementById('table-body').innerHTML = '';
 	
 	for (let office of responseJSON) {
 		let row = document.createElement('tr');
