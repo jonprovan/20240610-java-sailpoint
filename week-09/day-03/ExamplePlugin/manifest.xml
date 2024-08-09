@@ -13,6 +13,7 @@
       	<value>
       		<List>
       			<String>com.skillstorm.rest.OfficeResource</String>
+      			<String>com.skillstorm.rest.IdentityResource</String>
       		</List>
       	</value>
       </entry>
