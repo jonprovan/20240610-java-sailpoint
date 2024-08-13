@@ -143,5 +143,61 @@ public class OfficeService {
 		}
 		
 	}
+	
+	// checking how many Offices there are
+	public int countOffices() throws GeneralException {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = pluginContext.getConnection();
+			statement = PluginBaseHelper.prepareStatement(connection, "SELECT COUNT(*) FROM ep_plugin_office");
+			
+			ResultSet result = statement.executeQuery();
+			
+			result.next();
+			
+			return result.getInt("count(*)");
+			
+		} catch(SQLException e) {
+			throw new GeneralException(e);
+		} finally {
+			IOUtil.closeQuietly(statement);
+			IOUtil.closeQuietly(connection);
+		}
+		
+	}
+	
+	// deleting all Offices beyond the first 3
+	public int deleteExtraOffices() throws GeneralException {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = pluginContext.getConnection();
+			statement = PluginBaseHelper.prepareStatement(connection, "DELETE FROM ep_plugin_office WHERE id > 3");
+			
+			int numDeleted = statement.executeUpdate();
+			
+			if(numDeleted <= 0) {
+				throw new SQLException("Error with Deletion");
+			} else {
+				return numDeleted;
+			}
+			
+		} catch(SQLException e) {
+			throw new GeneralException(e);
+		} finally {
+			IOUtil.closeQuietly(statement);
+			IOUtil.closeQuietly(connection);
+		}
+		
+	}
+	
+	
+	
+	
 
 }

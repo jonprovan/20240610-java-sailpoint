@@ -24,6 +24,13 @@
       		</List>
       	</value>
       </entry>
+      <entry key="taskExecutors">
+      	<value>
+      		<List>
+      			<String>com.skillstorm.tasks.ClearExtraOfficesExecutor</String>
+      		</List>
+      	</value>
+      </entry>
       <entry key="settings">
         <value>
           <List>
