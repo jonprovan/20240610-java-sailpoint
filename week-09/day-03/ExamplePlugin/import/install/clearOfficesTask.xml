@@ -16,6 +16,9 @@
 				<Argument name="numberOfOfficesDeleted" type="int">
 					<Prompt>Number of Offices Deleted</Prompt>
 				</Argument>
+				<Argument name="officesRemaining" type="string">
+					<Prompt>Offices Remaining</Prompt>
+				</Argument>
 			</Returns>
 		</Signature>
 	</TaskDefinition>

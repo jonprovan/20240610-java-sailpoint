@@ -1,5 +1,8 @@
 package com.skillstorm.tasks;
 
+import java.util.List;
+
+import com.skillstorm.models.Office;
 import com.skillstorm.services.OfficeService;
 
 import sailpoint.api.SailPointContext;
@@ -9,6 +12,7 @@ import sailpoint.object.TaskSchedule;
 import sailpoint.task.BasePluginTaskExecutor;
 import sailpoint.tools.GeneralException;
 
+// TaskExecutors must extend this class to function properly
 public class ClearExtraOfficesExecutor extends BasePluginTaskExecutor {
 	
 	// something we can change to indicate success or failure
@@ -40,6 +44,17 @@ public class ClearExtraOfficesExecutor extends BasePluginTaskExecutor {
 		} else {
 			int numberOfOfficesDeleted = service().deleteExtraOffices();
 			result.put("numberOfOfficesDeleted", numberOfOfficesDeleted);
+			
+			List<Office> offices = service().getAllOffices();
+			String remainingOffices = "";
+			for (Office office : offices) {
+				remainingOffices += (office.getDepartment() + ", ");
+			}
+			
+			remainingOffices = remainingOffices.substring(0, remainingOffices.length() - 2);
+			
+			result.put("officesRemaining", remainingOffices);
+			
 			success = true;
 		}
 		

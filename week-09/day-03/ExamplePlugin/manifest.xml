@@ -31,6 +31,13 @@
       		</List>
       	</value>
       </entry>
+      <entry key="policyExecutors">
+      	<value>
+      		<List>
+      			<String>com.skillstorm.policies.MaximumOfficePolicyExecutor</String>
+      		</List>
+      	</value>
+      </entry>
       <entry key="settings">
         <value>
           <List>
