@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<sailpoint>
+	<ImportAction name="merge">
+		<Configuration name="ConnectorRegistry">
+			<Attributes>
+				<Map>
+					<entry key="applicationTemplates">
+						<value>
+							<List>
+								<Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, UNLOCK, SEARCH, UNSTRUCTURED_TARGETS, PASSWORD, CURRENT_PASSWORD, ACCOUNT_ONLY_REQUEST" icon="enterpriseIcon" name="SkillStorm Example Connector" type="Example Connector">
+									<Attributes>
+										<Map>
+											<entry key="formPath" value="example-connector-form.xhtml" />
+											<entry key="connectorClass" value="com.skillstorm.ExampleConnector" />
+										</Map>
+									</Attributes>
+								</Application>
+							</List>
+						</value>
+					</entry>
+				</Map>
+			</Attributes>
+		</Configuration>
+	</ImportAction>
+</sailpoint>
