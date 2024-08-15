@@ -14,6 +14,7 @@
 										<Map>
 											<entry key="formPath" value="example-connector-form.xhtml" />
 											<entry key="connectorClass" value="com.skillstorm.ExampleConnector" />
+											<entry key="host" value="Unspecified" />
 										</Map>
 									</Attributes>
 								</Application>

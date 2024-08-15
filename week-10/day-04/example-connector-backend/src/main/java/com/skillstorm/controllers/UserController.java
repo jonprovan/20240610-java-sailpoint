@@ -40,6 +40,7 @@ public class UserController {
 	// test connection
 	@GetMapping("/test")
 	public String testConnection() {
+		System.out.println("*************** Connection Initiated ******************");
 		return "Connection to Example Connector Backend successful!!";
 	}
 
