@@ -1,6 +1,8 @@
 package com.skillstorm;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
@@ -51,6 +53,28 @@ public class ExampleConnector extends AbstractConnector {
 			int responseCode = connection.getResponseCode(); // getting the code from the response
 			if(responseCode != 200)
 				throw new IOException("Response code was not 200!"); // throwing the proper exception if it didn't work
+			else {
+				// creating a reader so we can go through the content of the response
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				// creating a StringBuffer onto which to tack each additional line from the reader
+				StringBuffer sb = new StringBuffer();
+				sb.append("Response Code: " + responseCode + ", Content: ");
+				
+				// a holder String for the current line as it's first being read
+				String currentLine;
+				
+				// going through the reader, getting each line, and tacking it on to our String buffer
+				while ((currentLine = reader.readLine()) != null) {
+					sb.append(currentLine);
+				}
+				
+				// printing the GET request's contents to our Tomcat console
+				System.out.println(sb.toString());
+				
+				// closing the open reader stream
+				reader.close();
+				
+			}
 			
 		} catch(IOException e) {
 			throw new ConnectorException(e.getMessage()); // wrapping the exception in a ConnectorException to fail the test in SP
