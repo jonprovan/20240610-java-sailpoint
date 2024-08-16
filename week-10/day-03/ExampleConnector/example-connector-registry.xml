@@ -17,6 +17,25 @@
 											<entry key="host" value="Unspecified" />
 										</Map>
 									</Attributes>
+									<Schemas>
+										<Schema displayAttribute="username" identityAttribute="username" nativeObjectType="user" objectType="account">
+											<AttributeDefinition name="id" required="true" type="int" remediationModificationType="None">
+												<Description>The integer primary key in the connected system.</Description>
+											</AttributeDefinition>
+											<AttributeDefinition name="username" required="true" type="string" remediationModificationType="None">
+												<Description>The user's e-mail address and primary identifying characteristic.</Description>
+											</AttributeDefinition>
+											<AttributeDefinition name="firstname" required="true" type="string" remediationModificationType="None">
+												<Description>The user's first name.</Description>
+											</AttributeDefinition>
+											<AttributeDefinition name="lastname" required="true" type="string" remediationModificationType="None">
+												<Description>The user's last name.</Description>
+											</AttributeDefinition>
+											<AttributeDefinition name="department" required="true" type="string" remediationModificationType="None">
+												<Description>The user's work department at the company.</Description>
+											</AttributeDefinition>
+										</Schema>
+									</Schemas>
 								</Application>
 							</List>
 						</value>

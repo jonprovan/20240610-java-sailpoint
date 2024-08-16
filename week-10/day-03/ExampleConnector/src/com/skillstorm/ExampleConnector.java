@@ -7,7 +7,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import openconnector.AbstractConnector;
 import openconnector.ConnectorException;
@@ -84,10 +89,48 @@ public class ExampleConnector extends AbstractConnector {
 	
 	// this method will eventually return all of our users/accounts from the connected system
 	// this is what runs when you aggregate your account
+	// each Map<String, Object> is one account
 	@Override
-	public Iterator<Map<String, Object>> iterate(Filter arg0) throws ConnectorException, UnsupportedOperationException {
+	public Iterator<Map<String, Object>> iterate(Filter filter) throws ConnectorException, UnsupportedOperationException {
 		
-		return null;
+		try {
+			configure();
+			URL url = new URL(host + "/user");
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Authorization", authString);
+			
+			if(connection.getResponseCode() != 200)
+				throw new IOException("Response code was not 200!");
+			else {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				StringBuffer sb = new StringBuffer();
+				String currentLine;
+				while ((currentLine = reader.readLine()) != null) {
+					sb.append(currentLine);
+				}
+				
+				String response = sb.toString();
+				
+				System.out.println(response);
+				
+				// using ObjectMapper to extract the JSON objects from the above string
+				ObjectMapper mapper = new ObjectMapper();
+				
+				// mapping our string JSON results to the type we want for our eventual iterator
+				List<Map<String, Object>> mappedObjects = mapper.readValue(response, new TypeReference<List<Map<String, Object>>>(){});
+				
+				// turning our mapped objects into an iterator we can return
+				Iterator<Map<String, Object>> iterator = mappedObjects.iterator();
+				
+				reader.close();
+				
+				return iterator;
+			}
+			
+		} catch(IOException e) {
+			throw new ConnectorException(e.getMessage()); // wrapping the exception in a ConnectorException to fail the test in SP
+		}
 	}
 
 	// this method gets a specific user/account from the connected system
