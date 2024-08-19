@@ -3,21 +3,26 @@ package com.skillstorm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import openconnector.AbstractConnector;
 import openconnector.ConnectorException;
 import openconnector.Filter;
+import openconnector.Item;
 import openconnector.ObjectNotFoundException;
+import openconnector.Result;
 
 // our class must extend AbstractConnector from the openconnector library
 // you must add the openConnector.jar file to your build path
@@ -29,7 +34,7 @@ public class ExampleConnector extends AbstractConnector {
 	private String password;
 	private String authString;
 	
-	// methods we'll use include testConnection(), iterate(), configure(), provision()
+	// methods we'll use include testConnection(), iterate(), configure(), create()
 	
 	// this method runs once at class initialization
 	// can also call to it from other methods if it's not working
@@ -131,6 +136,82 @@ public class ExampleConnector extends AbstractConnector {
 		} catch(IOException e) {
 			throw new ConnectorException(e.getMessage()); // wrapping the exception in a ConnectorException to fail the test in SP
 		}
+	}
+	
+	// this method will run whenever we create a new Account in the connected system
+	// this happens when we POST an Account to the SCIM API, aiming at this specific application
+	@Override
+	public Result create(String nativeIdentifier, List<Item> items) {
+		
+		System.out.println("***************** WHAT'S COMING IN?? *******************");
+		System.out.println("nativeIdentifier = " + nativeIdentifier);
+		for (Item item : items) {
+			System.out.println(item.getName() + ": " + item.getValue());
+		}
+		
+		// a holder Map for the information in our Items
+		Map<String, Object> payload = new HashMap<>();
+		
+		// could use the separate nativeIdentifier to get the username
+		// payload.put("username", nativeIdentifier);
+		
+		// may want to include some overall null checks or replacement values for fields left off, etc.
+		
+		if (items != null && items.size() != 0)
+			for (Item item : items) {
+				payload.put(item.getName(), item.getValue());
+			}
+		
+		// we'll need an output byte stream to send the data, so we can create one with ObjectMapper
+//		byte[] bytes;
+//		try {
+//			bytes = new ObjectMapper().writeValueAsString(payload).getBytes();
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+		
+		Map<String, Object> responseObject = new HashMap<>();
+		
+		// making the POST request
+		try {
+			configure();
+			
+			// we'll need an output byte stream to send the data, so we can create one with ObjectMapper
+			byte[] bytes = new ObjectMapper().writeValueAsString(payload).getBytes();
+			
+			URL url = new URL(host + "/user");
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Authorization", authString);
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("Content-Length", String.valueOf(bytes.length)); // indicating length of output stream
+			connection.setDoOutput(true); // indicating that we will actually be streaming out
+			connection.getOutputStream().write(bytes); // writing the output stream itself
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			
+//			for (String line; (line = reader.readLine()) != null;) {
+//				System.out.print(line);
+//			}
+			
+			String response = "";
+			String line = "";
+			while ((line = reader.readLine()) != null) {
+				response += line;
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			responseObject = mapper.readValue(response, new TypeReference<Map<String, Object>>(){});
+			
+		} catch(IOException e) {
+			throw new ConnectorException(e.getMessage());
+		}
+		
+		Result result = new Result();
+		result.setObject(responseObject);
+		
+		return result;
 	}
 
 	// this method gets a specific user/account from the connected system
