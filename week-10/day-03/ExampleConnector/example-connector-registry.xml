@@ -34,6 +34,17 @@
 											<AttributeDefinition name="department" required="true" type="string" remediationModificationType="None">
 												<Description>The user's work department at the company.</Description>
 											</AttributeDefinition>
+											<AttributeDefinition entitlement="true" managed="true" multi="true" name="permission" schemaObjectType="permission" type="string">
+												<Description>The user's permissions in the connected application.</Description>
+											</AttributeDefinition>
+										</Schema>
+										<Schema aggregationType="group" displayAttribute="name" identityAttribute="name" nativeObjectType="permission" objectType="permission">
+											<AttributeDefinition name="id" required="true" type="int" remediationModificationType="None">
+												<Description>The integer primary key for the permission in the connected system.</Description>
+											</AttributeDefinition>
+											<AttributeDefinition name="name" required="true" type="string" remediationModificationType="None">
+												<Description>The permission name and its primary identifying characteristic.</Description>
+											</AttributeDefinition>
 										</Schema>
 									</Schemas>
 								</Application>

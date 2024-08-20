@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -125,6 +126,19 @@ public class ExampleConnector extends AbstractConnector {
 				// mapping our string JSON results to the type we want for our eventual iterator
 				List<Map<String, Object>> mappedObjects = mapper.readValue(response, new TypeReference<List<Map<String, Object>>>(){});
 				
+				// we have to turn the list of Permission objects into a list of Strings with their names only
+				for (Map<String, Object> user : mappedObjects) {
+					
+					List<String> stringPermissions = new LinkedList<>();
+					
+					for (Map<String, Object> permission : ((List<Map<String, Object>>)user.get("permission"))) {
+						stringPermissions.add(permission.get("name").toString());
+					}
+					
+					user.put("permission", stringPermissions);
+					
+				}
+				
 				// turning our mapped objects into an iterator we can return
 				Iterator<Map<String, Object>> iterator = mappedObjects.iterator();
 				
@@ -213,6 +227,69 @@ public class ExampleConnector extends AbstractConnector {
 		
 		return result;
 	}
+	
+	// this method will run whenever we send a PUT request to the SCIM API
+	// it will update the portions of our user that have changed
+	// we'll have to be careful on the backend side because of what we're getting
+	public Result update(String nativeIdentifier, List<Item> items) {
+		
+		configure();
+		
+		// creating an object to hold our payload
+		Map<String, Object> payload = new HashMap<>();
+		
+		// this will ONLY include things that have changed from the current values in SailPoint
+		for (Item item : items) {
+			payload.put(item.getName(), item.getValue());
+		}
+		
+		// manually adding nativeIdentifier, so we have something with which to find the record in the connected app
+		payload.put("username", nativeIdentifier);
+		
+		Map<String, Object> responseObject = new HashMap<>();
+		
+		try {
+			
+			byte[] bytes = new ObjectMapper().writeValueAsString(payload).getBytes();
+			
+			URL url = new URL(host + "/user");
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			
+			connection.setRequestMethod("PUT");
+			connection.setRequestProperty("Authorization", authString);
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("Content-Length", String.valueOf(bytes.length));
+			connection.setDoOutput(true);
+			connection.getOutputStream().write(bytes);
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			
+			String response = "";
+			String line = "";
+			while ((line = reader.readLine()) != null) {
+				response += line;
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			responseObject = mapper.readValue(response, new TypeReference<Map<String, Object>>(){});
+			
+			List<String> newPermissions = new LinkedList<>();
+			
+			for (Map<String, Object> permission : ((List<Map<String, Object>>)responseObject.get("permission"))) {
+				newPermissions.add(permission.get("name").toString());
+			}
+			
+			responseObject.put("permission", newPermissions);
+			
+		} catch(IOException e) {
+			throw new ConnectorException(e.getMessage());
+		}
+		
+		Result result = new Result();
+		result.setObject(responseObject);
+		return result;
+	}
+	
 
 	// this method gets a specific user/account from the connected system
 	@Override
